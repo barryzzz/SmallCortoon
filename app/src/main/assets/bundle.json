@@ -1,0 +1,25 @@
+{
+  "version": "1.0.0",
+  "bundles": [
+    {
+      "uri": "main",
+      "pkg": "xi.lsl.code.app.main"
+    },
+    {
+      "uri": "com",
+      "pkg": "xi.lsl.code.app.com"
+    },
+    {
+      "uri": "lib.style",
+      "pkg": "xi.lsl.lib.style"
+    },
+    {
+      "uri": "lib.update",
+      "pkg": "xi.lsl.lib.update"
+    },
+    {
+      "uri": "lib.utils",
+      "pkg": "xi.lsl.code.lib.utils"
+    }
+  ]
+}
