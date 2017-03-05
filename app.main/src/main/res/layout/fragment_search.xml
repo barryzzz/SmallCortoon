@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="120dp"
+        android:background="@color/app_base_bg"
+        android:fitsSystemWindows="true">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:text="搜索漫画" />
+
+
+        <TextView
+            android:id="@+id/search_sea"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_35"
+            android:layout_gravity="center"
+            android:layout_marginBottom="@dimen/dp_3"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp"
+            android:layout_marginTop="@dimen/dp_3"
+            android:background="@drawable/search_bg"
+            android:drawableLeft="@drawable/search_left"
+            android:drawableStart="@drawable/search_left"
+            android:gravity="center" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            android:layout_marginBottom="@dimen/dp_5"
+            android:gravity="center"
+            android:text="海贼王 火影忍者 名侦探柯南 犬夜叉  死神"
+            android:textColor="@color/white"
+            android:textSize="12sp" />
+    </FrameLayout>
+
+
+</LinearLayout>

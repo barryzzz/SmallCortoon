@@ -1,3 +1,21 @@
 <resources>
-    <string name="app_name">Lib.style</string>
+    <string name="app_name">鼠绘漫画ML</string>
+    <string name="title_activity_login">漫画</string>
+
+    <!-- Strings related to login -->
+    <string name="prompt_email">登录邮箱</string>
+    <string name="prompt_password">登录密码</string>
+    <string name="action_sign_in">登陆</string>
+    <string name="action_reg_in">注册</string>
+
+    <string name="reg_email">请输入常用邮箱</string>
+    <string name="reg_password">请输入密码</string>
+    <string name="reg_action_reg">确定注册</string>
+    <string name="reg_action_back">返回登录</string>
+    <string name="reg_accept">同意《使用协议》</string>
+    <string name="circle_of_friend">漫友圈</string>
+    <string name="setting">设置</string>
+    <string name="options">意见反馈</string>
+    <string name="about">关于</string>
+
 </resources>

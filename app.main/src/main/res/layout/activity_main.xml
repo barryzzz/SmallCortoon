@@ -1,18 +1,60 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/activity_main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingBottom="@dimen/activity_vertical_margin"
-    android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="xi.lsl.code.app.main.MainActivity">
+    tools:context="xi.lsl.cartoon.ui.MainActivity">
 
-    <TextView
-        android:layout_width="wrap_content"
+
+    <LinearLayout
+        android:id="@+id/main_rg_bottom"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Hello World!"/>
+        android:layout_alignParentBottom="true"
+        android:orientation="vertical">
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/e6e6e6" />
+
+        <RadioGroup
+
+            android:id="@+id/main_rg_group"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_45"
+            android:background="@color/white"
+            android:orientation="horizontal">
+
+            <RadioButton
+                android:id="@+id/main_rb_home"
+                style="@style/main_tab_bottom_style"
+                android:checked="true"
+                android:drawableTop="@drawable/home_selector" />
+
+            <RadioButton
+                android:id="@+id/main_rb_book"
+                style="@style/main_tab_bottom_style"
+                android:drawableTop="@drawable/book_selector" />
+
+            <RadioButton
+                android:id="@+id/main_rb_search"
+                style="@style/main_tab_bottom_style"
+                android:drawableTop="@drawable/search_selector" />
+
+            <RadioButton
+                android:id="@+id/main_rb_me"
+                style="@style/main_tab_bottom_style"
+                android:drawableTop="@drawable/me_selector" />
+        </RadioGroup>
+    </LinearLayout>
+
+
+    <android.support.v4.view.ViewPager
+        android:id="@+id/main_vp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@id/main_rg_bottom" />
+
 </RelativeLayout>

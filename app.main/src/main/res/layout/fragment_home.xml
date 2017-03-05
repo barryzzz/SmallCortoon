@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@null">
+
+        <RadioGroup
+            android:id="@+id/home_tab"
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:orientation="horizontal"
+            android:paddingLeft="@dimen/dp_3"
+            android:paddingRight="@dimen/dp_3"
+            android:paddingTop="1dp">
+
+            <RadioButton
+                android:id="@+id/home_tab_week"
+                style="@style/Home_Tab"
+                android:background="@drawable/home_tab_left_selector"
+                android:checked="true"
+                android:text="本周热门" />
+
+            <RadioButton
+                android:id="@+id/home_tab_rev"
+                style="@style/Home_Tab"
+                android:background="@drawable/home_tab_right_selector"
+                android:text="订阅更新" />
+
+        </RadioGroup>
+    </LinearLayout>
+
+    <android.support.v4.view.ViewPager
+        android:id="@+id/home_vp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+    </android.support.v4.view.ViewPager>
+
+</LinearLayout>

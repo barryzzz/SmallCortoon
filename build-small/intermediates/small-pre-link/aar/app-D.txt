@@ -13,5 +13,3 @@ com.android.support:support-core-utils:25.2.0
 com.android.support:transition:25.2.0
 net.wequick.small:small:1.1.0-alpha2
 com.android.support:appcompat-v7:25.2.0
-com.android.support:support-compat:+
-com.android.support:support-core-utils:+

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="me_button_style">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:padding">@dimen/dp_16</item>
+        <item name="android:textColor">@color/listworks</item>
+        <item name="android:textSize">@dimen/sp_16</item>
+        <item name="android:drawableRight">@drawable/more_icon</item>
+        <item name="android:background">@drawable/system_selector</item>
+        <item name="android:drawablePadding">@dimen/dp_16</item>
+    </style>
+
+</resources>

@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/f6f6f6"
+    android:orientation="vertical">
+
+    <include layout="@layout/title_layout" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+
+            android:orientation="vertical">
+
+            <android.support.v7.widget.LinearLayoutCompat
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dp_20"
+                android:background="@color/white"
+                android:orientation="vertical"
+                android:paddingLeft="@dimen/dp_10"
+                android:paddingRight="@dimen/dp_10"
+                app:divider="@drawable/divider_color"
+                app:paddingEnd="@dimen/dp_16"
+                app:paddingStart="@dimen/dp_16"
+                app:showDividers="beginning|middle|end">
+
+
+                <Button
+                    android:id="@+id/me_circle_bt"
+                    style="@style/me_button_style"
+                    android:drawableLeft="@drawable/mymsg_icon"
+                    android:text="漫友圈" />
+
+
+            </android.support.v7.widget.LinearLayoutCompat>
+
+
+            <android.support.v7.widget.LinearLayoutCompat
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dp_20"
+                android:background="@color/white"
+                android:orientation="vertical"
+                android:paddingLeft="@dimen/dp_10"
+                android:paddingRight="@dimen/dp_10"
+                app:divider="@drawable/divider_color"
+                app:paddingEnd="@dimen/dp_16"
+                app:paddingStart="@dimen/dp_16"
+                app:showDividers="beginning|middle|end">
+
+                <Button
+                    android:id="@+id/me_setting_bt"
+                    style="@style/me_button_style"
+                    android:drawableLeft="@drawable/setting_icon"
+                    android:text="设置" />
+
+                <Button
+                    android:id="@+id/me_contanct_bt"
+                    style="@style/me_button_style"
+                    android:drawableLeft="@drawable/contact_us_icon"
+                    android:text="联系我们" />
+
+                <Button
+                    android:id="@+id/me_about_bt"
+                    style="@style/me_button_style"
+                    android:drawableLeft="@drawable/about_icon"
+                    android:text="关于" />
+
+
+            </android.support.v7.widget.LinearLayoutCompat>
+        </LinearLayout>
+    </ScrollView>
+
+</LinearLayout>

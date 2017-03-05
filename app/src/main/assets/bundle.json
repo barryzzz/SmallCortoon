@@ -3,7 +3,10 @@
   "bundles": [
     {
       "uri": "main",
-      "pkg": "xi.lsl.code.app.main"
+      "pkg": "xi.lsl.code.app.main",
+      "rules": {
+        "login": "LoginActivity"
+      }
     },
     {
       "uri": "com",
