@@ -8,4 +8,9 @@ package xi.lsl.code.lib.utils.net;
 public class Constants {
     public static final String NETWORK_STATUS_SUCCESS = "0";
     public static final String KEY_LOGIN = "KEY_LOGIN";
+
+    //用于web read
+    public static final String WEB_URL = "url";
+    public static final String WEB_TITLE = "title";
+    public static final String WEB_CHAPTER_ID = "ChapterId";
 }

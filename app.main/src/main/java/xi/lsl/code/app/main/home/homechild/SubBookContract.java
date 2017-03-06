@@ -2,8 +2,8 @@ package xi.lsl.code.app.main.home.homechild;
 
 import java.util.List;
 
-import xi.lsl.code.app.main.base.BasePresenter;
-import xi.lsl.code.app.main.base.BaseView;
+import xi.lsl.code.lib.utils.base.BasePresenter;
+import xi.lsl.code.lib.utils.base.BaseView;
 import xi.lsl.code.lib.utils.entity.Book;
 
 

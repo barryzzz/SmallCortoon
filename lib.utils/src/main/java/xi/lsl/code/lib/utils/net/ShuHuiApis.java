@@ -54,6 +54,5 @@ public interface ShuHuiApis {
     @GET("ComicBooks/GetSubscribe")
     Observable<BookEntity> getSubBooks();
 
-    @GET()
-    Observable<Slide> getSlide();
+
 }

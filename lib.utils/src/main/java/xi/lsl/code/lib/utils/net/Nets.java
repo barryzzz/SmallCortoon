@@ -2,6 +2,7 @@ package xi.lsl.code.lib.utils.net;
 
 import java.util.concurrent.TimeUnit;
 
+import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
@@ -15,11 +16,12 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class Nets {
 
     public static final String BASE_SHUHUI_API = "http://www.ishuhui.net";
-    public static final String BASE_SHUHUI_SLIGE = "";
+    public static final String BASE_SHUHUI_SLIGE = "http://two.ishuhui.com/";
     public static final String BASE_BMOB_API = "https://api.bmob.cn/1/";
 
-    public static ShuHuiApis sShuHuiApis;
-    public static BmobApis sBmobApis;
+    private static ShuHuiApis sShuHuiApis;
+    private static BmobApis sBmobApis;
+    private static CommonApis sCommonApis;
 
     private Nets() {
         throw new RuntimeException("can not init !");
@@ -32,11 +34,18 @@ public class Nets {
     }
 
     public static synchronized BmobApis getBmobApis() {
-
+        if (sBmobApis == null)
+            sBmobApis = createRetrofit(BmobApis.class, BASE_BMOB_API, configClient());
         return sBmobApis;
     }
 
-    public static <T> T createRetrofit(Class<T> tClass, String baseUrl, OkHttpClient client) {
+    public static synchronized CommonApis getCommonApis() {
+        if (sCommonApis == null)
+            sCommonApis = createRetrofit(CommonApis.class, BASE_SHUHUI_SLIGE, configClient(new SSLLoggerInterceptor()));
+        return sCommonApis;
+    }
+
+    private static <T> T createRetrofit(Class<T> tClass, String baseUrl, OkHttpClient client) {
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(baseUrl)
                 .client(client)
@@ -46,7 +55,7 @@ public class Nets {
         return retrofit.create(tClass);
     }
 
-    public static <T> T createRetrofit(Class<T> tClass) {
+    private static <T> T createRetrofit(Class<T> tClass) {
 
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(BASE_SHUHUI_API)
@@ -68,5 +77,12 @@ public class Nets {
         return client;
     }
 
-
+    private static OkHttpClient configClient(Interceptor interceptor) {
+        OkHttpClient client = new OkHttpClient.Builder()
+                .connectTimeout(5, TimeUnit.SECONDS)
+                .addInterceptor(interceptor)
+                .cookieJar(new CookieManger())
+                .build();
+        return client;
+    }
 }

@@ -13,10 +13,10 @@ import butterknife.ButterKnife;
 import butterknife.InjectView;
 import butterknife.OnClick;
 import xi.lsl.code.app.main.R;
-import xi.lsl.code.app.main.base.MyPageAdapter;
-import xi.lsl.code.app.main.base.widget.LazyFragment;
 import xi.lsl.code.app.main.home.homechild.HotWeekFragment;
 import xi.lsl.code.app.main.home.homechild.SubFragment;
+import xi.lsl.code.lib.utils.base.MyPageAdapter;
+import xi.lsl.code.lib.utils.base.widget.LazyFragment;
 
 
 /**

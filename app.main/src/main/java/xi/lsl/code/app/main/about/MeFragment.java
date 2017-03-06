@@ -3,7 +3,7 @@ package xi.lsl.code.app.main.about;
 import android.os.Bundle;
 
 import xi.lsl.code.app.main.R;
-import xi.lsl.code.app.main.base.widget.LazyFragment;
+import xi.lsl.code.lib.utils.base.widget.LazyFragment;
 
 /**
  * Created by lishoulin on 2017/2/13.

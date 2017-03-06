@@ -12,10 +12,14 @@ import java.util.List;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 import me.relex.circleindicator.CircleIndicator;
+import rx.functions.Action0;
+import rx.functions.Action1;
 import rx.subscriptions.CompositeSubscription;
 import xi.lsl.code.app.main.R;
-import xi.lsl.code.app.main.base.widget.LazyFragment;
+import xi.lsl.code.lib.utils.base.widget.LazyFragment;
 import xi.lsl.code.lib.utils.entity.Slide;
+import xi.lsl.code.lib.utils.net.Nets;
+import xi.lsl.code.lib.utils.net.RxSchedulers;
 
 /**
  * Created by lishoulin on 2017/2/13.
@@ -30,10 +34,8 @@ public class BookFragment extends LazyFragment {
     private ShowPageAdapter mPageAdapter;
     private ShowPageHandler mPageHandler;
     //    private List<Fragment> fragments = null;
-//
     private static final String[] mTitles = new String[]{"热血", "国产", "同人", "鼠绘"};
-    //
-//
+
     @InjectView(R.id.book_vp)
     ViewPager mViewPager;
     @InjectView(R.id.book_vp_tip)
@@ -52,6 +54,7 @@ public class BookFragment extends LazyFragment {
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         mCompositeSubscription = new CompositeSubscription();
+
     }
 
     private void initView() {
@@ -73,9 +76,9 @@ public class BookFragment extends LazyFragment {
         if (mListBeen == null) {
             mListBeen = new ArrayList<Slide.ListBean>();
         }
-//        mPageAdapter = new ShowPageAdapter(mListBeen, getContext());
-//        mViewPager.setAdapter(mPageAdapter);
-//        mCircleIndicator.setViewPager(mViewPager);
+        mPageAdapter = new ShowPageAdapter(mListBeen, getContext());
+        mViewPager.setAdapter(mPageAdapter);
+        mCircleIndicator.setViewPager(mViewPager);
         initView();
         mTabLayout.setTabMode(TabLayout.MODE_FIXED);
         mTabLayout.addTab(mTabLayout.newTab().setText(mTitles[0]));
@@ -115,31 +118,28 @@ public class BookFragment extends LazyFragment {
 
     private void getSlideData() throws IOException {
 
-//        OkHttpClient client = new OkHttpClient.Builder()
-//                .connectTimeout(5, TimeUnit.SECONDS)
-//                .addInterceptor(new LoggerInterceptor())
-//                .cookieJar(new CookieManger())
-//                .build();
-//
-//        Retrofit retrofit = new Retrofit.Builder()
-//                .baseUrl("http://two.ishuhui.com/")
-//                .client(client)
-//                .addConverterFactory(GsonConverterFactory.create())
-//                .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
-//                .build();
-//        CommonAPis commonAPis = retrofit.create(CommonAPis.class);
-//
-//
-//        mCompositeSubscription.add(commonAPis.getSlide()
-//                .compose(RxSchedulers.<Slide>io_main())
-//                .subscribe(new Action1<Slide>() {
-//                    @Override
-//                    public void call(Slide slide) {
-//                        if (slide.getList() != null && slide.getList().size() > 0) {
-//                            iniSlideView(slide.getList());
-//                        }
-//                    }
-//                }));
+        mCompositeSubscription.add(Nets.getCommonApis().getSlide()
+                .compose(RxSchedulers.<Slide>io_main())
+                .subscribe(new Action1<Slide>() {
+                    @Override
+                    public void call(Slide slide) {
+                        if (slide.getList() != null && slide.getList().size() > 0) {
+                            iniSlideView(slide.getList());
+                        }
+                    }
+                }, new Action1<Throwable>() {
+                    @Override
+                    public void call(Throwable throwable) {
+
+                    }
+                }, new Action0() {
+                    @Override
+                    public void call() {
+
+                    }
+                })
+        );
+
     }
 
     @Override

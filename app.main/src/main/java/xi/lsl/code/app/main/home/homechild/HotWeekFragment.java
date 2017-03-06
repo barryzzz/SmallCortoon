@@ -8,6 +8,8 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.view.View;
 
+import net.wequick.small.Small;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -15,10 +17,12 @@ import butterknife.ButterKnife;
 import butterknife.InjectView;
 import xi.lsl.code.app.main.App;
 import xi.lsl.code.app.main.R;
-import xi.lsl.code.app.main.base.widget.LazyFragment;
-import xi.lsl.code.app.main.base.widget.RecyclerOnScrollListener;
-import xi.lsl.code.app.main.base.widget.SpacesItemDecoration;
+import xi.lsl.code.lib.utils.base.widget.LazyFragment;
+import xi.lsl.code.lib.utils.base.widget.RecyclerOnScrollListener;
+import xi.lsl.code.lib.utils.base.widget.SpacesItemDecoration;
 import xi.lsl.code.lib.utils.entity.Book;
+import xi.lsl.code.lib.utils.net.CommonApis;
+import xi.lsl.code.lib.utils.net.Constants;
 import xi.lsl.code.lib.utils.utils.FastOnClickUtil;
 import xi.lsl.code.lib.utils.utils.SPUtil;
 import xi.lsl.code.lib.utils.utils.ScreenUtil;
@@ -84,10 +88,17 @@ public class HotWeekFragment extends LazyFragment implements BookContract.View {
             @Override
             public void onItemClick(View v, int position) {
                 if (FastOnClickUtil.fastClick(1000)) {
-//                    Map<String, String> map = new HashMap<String, String>();
-//                    map.put(WebReadActivity.TITLE, books.get(position).getTitle());
-//                    map.put(WebReadActivity.URL, CommonAPis.URL_IMG_CHAPTER + books.get(position).getLastChapter().getId());
-//                    gotoActivity(WebReadActivity.class, map);
+                    //构造参数
+                    StringBuffer url = new StringBuffer();
+                    url.append(Constants.WEB_CHAPTER_ID).append("=");
+                    url.append(books.get(position).getLastChapter().getId());
+                    url.append("&" + Constants.WEB_TITLE + "=");
+                    url.append(books.get(position).getTitle());
+                    //插件跳转
+//                    toast(url.toString());
+
+                    Small.openUri("read?" + url.toString(), getActivity());
+
                 } else {
                     toast("重复点击啦");
                 }

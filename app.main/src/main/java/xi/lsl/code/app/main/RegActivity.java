@@ -15,7 +15,7 @@ import butterknife.OnClick;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
 import rx.schedulers.Schedulers;
-import xi.lsl.code.app.main.base.BaseActivity;
+import xi.lsl.code.lib.utils.base.BaseActivity;
 import xi.lsl.code.lib.utils.entity.RegMsg;
 import xi.lsl.code.lib.utils.entity.User;
 import xi.lsl.code.lib.utils.net.Constants;

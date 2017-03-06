@@ -23,6 +23,10 @@
     {
       "uri": "lib.utils",
       "pkg": "xi.lsl.code.lib.utils"
+    },
+    {
+      "uri": "read",
+      "pkg": "xi.lsl.app.read"
     }
   ]
 }

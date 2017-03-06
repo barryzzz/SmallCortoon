@@ -13,8 +13,8 @@ import java.util.List;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 import xi.lsl.code.app.main.R;
-import xi.lsl.code.app.main.base.widget.LazyFragment;
-import xi.lsl.code.app.main.base.widget.SpacesItemDecoration;
+import xi.lsl.code.lib.utils.base.widget.LazyFragment;
+import xi.lsl.code.lib.utils.base.widget.SpacesItemDecoration;
 import xi.lsl.code.lib.utils.entity.Book;
 import xi.lsl.code.lib.utils.utils.ScreenUtil;
 
