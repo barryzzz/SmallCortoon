@@ -10,6 +10,7 @@ import retrofit2.http.POST;
 import retrofit2.http.Query;
 import retrofit2.http.QueryMap;
 import rx.Observable;
+import xi.lsl.code.lib.utils.entity.BmobBook;
 import xi.lsl.code.lib.utils.entity.BmobReponse;
 import xi.lsl.code.lib.utils.entity.User;
 
@@ -33,11 +34,11 @@ public interface BmobApis {
     @GET("classes/book_comment")
     Observable<ResponseBody> QueryComment(@Query("book_id") String bookid);
 
-    @GET("classes/book_book")
-    Observable<ResponseBody> QueryBooks();
+    @GET("classes/book_book?where=")
+    Observable<BmobBook> QueryBooks(@Query("book_id") String bookid);
 
     @POST("classes/book_book")
-    Observable<BmobReponse> InsertBooks(@QueryMap Map<String, String> map);
+    Observable<BmobReponse> InsertBooks(@Body RequestBody body);
 
     //调用云逻辑获取更新
     @POST("functions/getUpdate")

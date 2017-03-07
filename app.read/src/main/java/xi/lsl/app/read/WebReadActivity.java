@@ -5,6 +5,7 @@ import android.content.res.Configuration;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.webkit.WebChromeClient;
@@ -18,8 +19,12 @@ import net.wequick.small.Small;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 import butterknife.OnClick;
+import rx.functions.Action0;
+import rx.functions.Action1;
+import rx.subscriptions.CompositeSubscription;
 import xi.lsl.app.read.widget.ReadWebView;
 import xi.lsl.code.lib.utils.base.BaseActivity;
+import xi.lsl.code.lib.utils.entity.BmobReponse;
 import xi.lsl.code.lib.utils.net.CommonApis;
 import xi.lsl.code.lib.utils.net.Constants;
 import xi.lsl.code.lib.utils.utils.ScreenUtil;
@@ -42,6 +47,9 @@ public class WebReadActivity extends BaseActivity {
     private String bookId;
     private String title;
 
+    private CompositeSubscription mSubscription;
+    private BookModel mBookModel;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -57,15 +65,42 @@ public class WebReadActivity extends BaseActivity {
             url = "";
             title = "加载错误...";
         }
+
+        mSubscription = new CompositeSubscription();
+        mBookModel = new BookModel();
+        saveBook(bookId, title);
+
         iniWebView();
 
 
     }
 
+
+    private void saveBook(String bookId, String name) {
+        if (bookId != null && name != null) {
+            mSubscription.add(mBookModel.insertBook(bookId, name).subscribe(new Action1<BmobReponse>() {
+                @Override
+                public void call(BmobReponse bmobReponse) {
+                    Log.e("info--》", "code" + bmobReponse.code);
+                }
+            }, new Action1<Throwable>() {
+                @Override
+                public void call(Throwable throwable) {
+
+                }
+            }, new Action0() {
+                @Override
+                public void call() {
+
+                }
+            }));
+        }
+    }
+
     private void iniWebView() {
 
         WebSettings webSettings = mWebView.getSettings();
-        webSettings.setJavaScriptEnabled(true);
+//        webSettings.setJavaScriptEnabled(true);
         webSettings.setLoadWithOverviewMode(true);
         webSettings.setAppCacheEnabled(true);
         webSettings.setLayoutAlgorithm(WebSettings.LayoutAlgorithm.SINGLE_COLUMN);
@@ -201,10 +236,12 @@ public class WebReadActivity extends BaseActivity {
 
     @Override
     protected void onPause() {
-        super.onResume();
+        super.onPause();
         if (mWebView != null)
             mWebView.onPause();
+
     }
+
 
     @Override
     protected void onResume() {
