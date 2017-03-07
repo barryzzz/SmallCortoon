@@ -35,13 +35,13 @@ public class Nets {
 
     public static synchronized BmobApis getBmobApis() {
         if (sBmobApis == null)
-            sBmobApis = createRetrofit(BmobApis.class, BASE_BMOB_API, configClient());
+            sBmobApis = createRetrofit(BmobApis.class, BASE_BMOB_API, configClient(new SSLLoggerInterceptor()));
         return sBmobApis;
     }
 
     public static synchronized CommonApis getCommonApis() {
         if (sCommonApis == null)
-            sCommonApis = createRetrofit(CommonApis.class, BASE_SHUHUI_SLIGE, configClient(new SSLLoggerInterceptor()));
+            sCommonApis = createRetrofit(CommonApis.class, BASE_SHUHUI_SLIGE, configClient());
         return sCommonApis;
     }
 

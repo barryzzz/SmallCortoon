@@ -2,28 +2,25 @@ package xi.lsl.code.app.main;
 
 import android.os.Bundle;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
-
-import java.util.HashMap;
-import java.util.Map;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 import butterknife.OnClick;
-import okhttp3.ResponseBody;
-import rx.android.schedulers.AndroidSchedulers;
+import rx.Observable;
 import rx.functions.Action0;
 import rx.functions.Action1;
-import rx.schedulers.Schedulers;
+import rx.functions.Func1;
 import rx.subscriptions.CompositeSubscription;
 import xi.lsl.code.app.main.main.MainActivity;
 import xi.lsl.code.lib.utils.base.BaseActivity;
+import xi.lsl.code.lib.utils.entity.BmobReponse;
 import xi.lsl.code.lib.utils.entity.LoginMsg;
 import xi.lsl.code.lib.utils.entity.User;
 import xi.lsl.code.lib.utils.net.Constants;
 import xi.lsl.code.lib.utils.net.Nets;
+import xi.lsl.code.lib.utils.net.RxSchedulers;
 import xi.lsl.code.lib.utils.utils.EncryptionUtils;
 import xi.lsl.code.lib.utils.utils.FastOnClickUtil;
 import xi.lsl.code.lib.utils.utils.SPUtil;
@@ -66,37 +63,36 @@ public class LoginActivity extends BaseActivity {
     }
 
     /**
+     * TODO 查询用户是否存在 todolist
      * @param s1 email
      * @param s2 password
      */
     private void gotoLogin(final String s1, final String s2) {
         mSubscription.add(Nets.getShuHuiApis().userLogin(s1, s2, FromType)
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribeOn(Schedulers.io())
-                .subscribe(new Action1<LoginMsg>() {
+                .compose(RxSchedulers.<LoginMsg>io_main())
+                .flatMap(new Func1<LoginMsg, Observable<BmobReponse>>() {
                     @Override
-                    public void call(LoginMsg loginMsg) {
-                        if (loginMsg != null) {
-                            if (loginMsg.getErrCode().equals(Constants.NETWORK_STATUS_SUCCESS)) {
-                                User user = new User(s1, s2);
-                                SPUtil.saveObject(Constants.KEY_LOGIN, user);
-                                saveBmobUser(loginMsg.getReturn());
-                                App.userInfo = user;
-                            } else {
-                                toast(loginMsg.getErrMsg());
-                            }
+                    public Observable<BmobReponse> call(LoginMsg loginMsg) {
+                        LoginMsg.ReturnBean bean=loginMsg.getReturn();
+                        User user = new User(bean.getId()+"",s1, s2,bean.getAvatar());
+                        SPUtil.saveObject(Constants.KEY_LOGIN, user);
+                        App.userInfo = user;
+                        return mUserModel.insertUser(user);
+                    }
+                }).subscribe(new Action1<BmobReponse>() {
+                    @Override
+                    public void call(BmobReponse bmobReponse) {
 
-                        }
                     }
                 }, new Action1<Throwable>() {
                     @Override
                     public void call(Throwable throwable) {
-                        Log.e("info--->", throwable.getMessage());
+                        gotoActivity(MainActivity.class, true); //成功跳转
                     }
                 }, new Action0() {
                     @Override
                     public void call() {
-
+                        gotoActivity(MainActivity.class, true); //成功跳转
                     }
                 }));
 
@@ -108,37 +104,6 @@ public class LoginActivity extends BaseActivity {
     }
 
 
-    private void saveBmobUser(LoginMsg.ReturnBean bean) {
-        if (bean != null) {
-            Map<String, String> map = new HashMap<>();
-            map.put("user_userid", bean.getId() + "");
-            map.put("user_headurl", bean.getAvatar());
-            map.put("user_email", bean.getEmail());
-//            map.put("user_nickname", bean.getNickName());
-            if (mUserModel != null) {
-                mSubscription.add(mUserModel.insertUser(map)
-                        .subscribe(new Action1<ResponseBody>() {
-                            @Override
-                            public void call(ResponseBody responseBody) {
-
-                            }
-                        }, new Action1<Throwable>() {
-                            @Override
-                            public void call(Throwable throwable) {
-
-                            }
-                        }, new Action0() {
-                            @Override
-                            public void call() {
-                                gotoActivity(MainActivity.class, true); //成功跳转
-                            }
-                        }));
-            }
-
-        } else {
-            gotoActivity(MainActivity.class, true); //成功跳转
-        }
-    }
 
 }
 

@@ -95,8 +95,8 @@ public class RegActivity extends BaseActivity {
                         if (loginMsg != null) {
                             if (loginMsg.getErrCode().equals(Constants.NETWORK_STATUS_SUCCESS)) {
                                 toast("注册成功!");
-                                User user = new User(email, password);
-                                SPUtil.saveObject(Constants.KEY_LOGIN, user);
+//                                User user = new User(email, password);
+//                                SPUtil.saveObject(Constants.KEY_LOGIN, user);
                                 gotoActivity(WelcomeActivity.class, true);
                             } else {
                                 toast(loginMsg.getErrMsg());

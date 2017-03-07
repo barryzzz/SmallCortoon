@@ -1,5 +1,7 @@
 package xi.lsl.code.app.com.comment;
 
+import rx.subscriptions.CompositeSubscription;
+
 /**
  * Description:
  * Author   :lishoulin
@@ -7,8 +9,18 @@ package xi.lsl.code.app.com.comment;
  */
 
 public class CommentPresenter implements CommentContract.Presenter {
+
+    private CommentModel mCommentModel;
+    private CommentContract.View mView;
+    private CompositeSubscription mSubscription;
+
+    public CommentPresenter(CommentModel commentModel, CommentContract.View view) {
+        mCommentModel = commentModel;
+        mView = view;
+    }
+
     @Override
-    public void loadComment() {
+    public void loadComment(int bookid) {
 
     }
 
@@ -19,11 +31,12 @@ public class CommentPresenter implements CommentContract.Presenter {
 
     @Override
     public void subscribe() {
-
+        mSubscription=new CompositeSubscription();
     }
 
     @Override
     public void unsubscribe() {
-
+        mSubscription.clear();;
+        mSubscription=null;
     }
 }

@@ -19,7 +19,7 @@ public interface CommentContract {
         /**
          * 读取评论
          */
-        void loadComment();
+        void loadComment(int bookid);
 
         /**
          * 进行评论

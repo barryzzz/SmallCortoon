@@ -1,5 +1,7 @@
 package xi.lsl.code.lib.utils.entity;
 
+import com.google.gson.annotations.SerializedName;
+
 /**
  * Description:
  * Author   :lishoulin
@@ -7,16 +9,32 @@ package xi.lsl.code.lib.utils.entity;
  */
 
 public class User {
-    private String email;
-    private String pass;
+    @SerializedName("user_userid")
+    private String id;
 
+    @SerializedName("user_email")
+    private String email;
+
+    private String pass;
+    @SerializedName("user_headurl")
+    private String headurl;
     public User() {
 
     }
 
-    public User(String email, String pass) {
+    public User(String id, String email, String pass, String headurl) {
+        this.id = id;
         this.email = email;
         this.pass = pass;
+        this.headurl = headurl;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 
     public String getEmail() {
@@ -33,5 +51,13 @@ public class User {
 
     public void setPass(String pass) {
         this.pass = pass;
+    }
+
+    public String getHeadurl() {
+        return headurl;
+    }
+
+    public void setHeadurl(String headurl) {
+        this.headurl = headurl;
     }
 }

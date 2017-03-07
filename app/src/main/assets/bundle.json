@@ -10,7 +10,10 @@
     },
     {
       "uri": "com",
-      "pkg": "xi.lsl.code.app.com"
+      "pkg": "xi.lsl.code.app.com",
+      "rules": {
+        "circle": "CircleActivity"
+      }
     },
     {
       "uri": "lib.style",
