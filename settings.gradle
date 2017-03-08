@@ -1,1 +1,1 @@
-include ':app', ':app.main', ':lib.update', ':lib.style', ':app.com', ':lib.utils', ':app.read'
+include ':app', ':app.main', ':lib.update', ':lib.style', ':app.com', ':lib.utils', ':app.read', ':app+stub'

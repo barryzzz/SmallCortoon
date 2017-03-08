@@ -47,6 +47,7 @@ int drawable searchone 0x7902002d
 int drawable searchtwo 0x7902002e
 int drawable setting_icon 0x7902002f
 int drawable system_selector 0x79020030
+int drawable connect_top_img 0x79020031
 int string about 0x79030000
 int string action_reg_in 0x79030001
 int string action_sign_in 0x79030002

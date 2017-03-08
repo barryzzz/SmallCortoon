@@ -5,14 +5,21 @@ import android.content.res.Configuration;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.widget.PopupWindowCompat;
+import android.transition.Transition;
+import android.transition.TransitionManager;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.KeyEvent;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.LinearLayout;
+import android.widget.PopupWindow;
 
 import net.wequick.small.Small;
 
@@ -50,6 +57,8 @@ public class WebReadActivity extends BaseActivity {
     private CompositeSubscription mSubscription;
     private BookModel mBookModel;
 
+    private PopupWindow mPopupWindow;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -71,6 +80,7 @@ public class WebReadActivity extends BaseActivity {
         saveBook(bookId, title);
 
         iniWebView();
+        iniPopuWindow();
 
 
     }
@@ -95,6 +105,25 @@ public class WebReadActivity extends BaseActivity {
                 }
             }));
         }
+    }
+
+    private void iniPopuWindow() {
+
+        mPopupWindow = new PopupWindow(mContext);
+        mPopupWindow.setWidth(ViewGroup.LayoutParams.MATCH_PARENT);
+        mPopupWindow.setHeight(ScreenUtil.dip2px(200f));
+        mPopupWindow.setContentView(LayoutInflater.from(mContext).inflate(R.layout.popu_layout, null));
+        mPopupWindow.setFocusable(true);
+        mPopupWindow.setClippingEnabled(true);
+
+        mPopupWindow.setAnimationStyle(R.style.popu_anim_style);
+
+//        mPopupWindow.setExitTransition(TransitionManager.);
+
+
+        View view = mPopupWindow.getContentView();
+        ButterKnife.inject(view);
+
     }
 
     private void iniWebView() {
@@ -147,6 +176,13 @@ public class WebReadActivity extends BaseActivity {
                 }
                 break;
             case R.id.read_bottom_catalog:
+                if (mPopupWindow != null) {
+                    if (mPopupWindow.isShowing()) {
+                        mPopupWindow.dismiss();
+                    } else {
+                        PopupWindowCompat.showAsDropDown(mPopupWindow, mBottomLinearLayout, Gravity.TOP, 0, 0);
+                    }
+                }
                 break;
             case R.id.read_bottom_down:
                 break;
