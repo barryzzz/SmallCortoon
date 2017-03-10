@@ -3,6 +3,7 @@ package xi.lsl.code.app.main.book;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
+import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 
 import java.io.IOException;
@@ -16,6 +17,11 @@ import rx.functions.Action0;
 import rx.functions.Action1;
 import rx.subscriptions.CompositeSubscription;
 import xi.lsl.code.app.main.R;
+import xi.lsl.code.app.main.book.fan.FanFragment;
+import xi.lsl.code.app.main.book.hot.HotFragment;
+import xi.lsl.code.app.main.book.mic.MadeInChinaFragment;
+import xi.lsl.code.app.main.book.mouse.MouseFragment;
+import xi.lsl.code.lib.utils.base.MyPageAdapter;
 import xi.lsl.code.lib.utils.base.widget.LazyFragment;
 import xi.lsl.code.lib.utils.entity.Slide;
 import xi.lsl.code.lib.utils.net.Nets;
@@ -33,7 +39,7 @@ public class BookFragment extends LazyFragment {
     private List<Slide.ListBean> mListBeen = null;
     private ShowPageAdapter mPageAdapter;
     private ShowPageHandler mPageHandler;
-    //    private List<Fragment> fragments = null;
+    private List<Fragment> fragments = null;
     private static final String[] mTitles = new String[]{"热血", "国产", "同人", "鼠绘"};
 
     @InjectView(R.id.book_vp)
@@ -58,13 +64,13 @@ public class BookFragment extends LazyFragment {
     }
 
     private void initView() {
-//        if (fragments == null || fragments.size() < 0) {
-//            fragments = new ArrayList<>(4);
-//            fragments.add(HotFragment.newInstance());
-//            fragments.add(MadeInChinaFragment.newInstance());
-//            fragments.add(FanFragment.newInstance());
-//            fragments.add(MouseFragment.newInstance());
-//        }
+        if (fragments == null || fragments.size() < 0) {
+            fragments = new ArrayList<>(4);
+            fragments.add(HotFragment.newInstance());
+            fragments.add(MadeInChinaFragment.newInstance());
+            fragments.add(FanFragment.newInstance());
+            fragments.add(MouseFragment.newInstance());
+        }
 
     }
 
@@ -86,8 +92,8 @@ public class BookFragment extends LazyFragment {
         mTabLayout.addTab(mTabLayout.newTab().setText(mTitles[2]));
         mTabLayout.addTab(mTabLayout.newTab().setText(mTitles[3]));
 
-//        mContentViewPager.setAdapter(new MyPageAdapter(getFragmentManager(), fragments, mTitles));
-//        mTabLayout.setupWithViewPager(mContentViewPager);
+        mContentViewPager.setAdapter(new MyPageAdapter(getFragmentManager(), fragments, mTitles));
+        mTabLayout.setupWithViewPager(mContentViewPager);
 
         lazyLoad();
     }

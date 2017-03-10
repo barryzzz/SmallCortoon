@@ -1296,6 +1296,7 @@ int style Widget_Design_ScrimInsetsFrameLayout
 int style Widget_Design_Snackbar
 int style Widget_Design_TabLayout
 int style Widget_Design_TextInputLayout
+int style popu_anim_style
 int[] styleable ActionBar
 int styleable ActionBar_background
 int styleable ActionBar_backgroundSplit

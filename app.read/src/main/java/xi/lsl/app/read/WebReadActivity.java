@@ -116,9 +116,7 @@ public class WebReadActivity extends BaseActivity {
         mPopupWindow.setFocusable(true);
         mPopupWindow.setClippingEnabled(true);
 
-        mPopupWindow.setAnimationStyle(R.style.popu_anim_style);
-
-//        mPopupWindow.setExitTransition(TransitionManager.);
+//        mPopupWindow.setAnimationStyle(xi.lsl.code.smallcortoon.R.style.popu_anim_style);
 
 
         View view = mPopupWindow.getContentView();

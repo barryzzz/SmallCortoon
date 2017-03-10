@@ -1,15 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical">
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:orientation="vertical">
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="@dimen/dp_45"
+        android:layout_height="wrap_content"
         android:background="@color/app_base_bg"
         android:fitsSystemWindows="true"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:paddingBottom="@dimen/dp_5"
+        android:paddingTop="@dimen/dp_5"
+        android:transitionName="sharesearch">
 
         <TextView
             android:id="@+id/search_back"
@@ -17,9 +20,10 @@
             android:layout_height="45dp"
             android:layout_gravity="center"
             android:background="@drawable/back_white_icon"
-            android:gravity="center" />
+            android:gravity="center"/>
 
         <EditText
+            android:singleLine="true"
             android:id="@+id/search_edit"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -27,7 +31,10 @@
             android:layout_marginTop="@dimen/dp_5"
             android:layout_weight="0.9"
             android:background="@drawable/search_bg"
-            android:padding="@dimen/dp_10" />
+            android:padding="@dimen/dp_10"
+            android:textColor="@color/comment_desc_color"
+            android:textSize="12sp"
+            />
 
         <TextView
             android:id="@+id/search_sea_btn"
@@ -38,7 +45,7 @@
             android:gravity="center"
             android:text="搜索"
             android:textColor="@color/white"
-            android:textSize="@dimen/sp_16" />
+            android:textSize="@dimen/sp_16"/>
     </LinearLayout>
 
 </LinearLayout>
