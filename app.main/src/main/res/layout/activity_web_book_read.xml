@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:tools="http://schemas.android.com/tools"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+
+    <xi.lsl.code.lib.utils.base.widget.ReadWebView
+        android:id="@+id/read_webview"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="center_vertical"
+        android:clipChildren="false"
+        android:clipToPadding="false"
+        android:paddingTop="24dp"
+        android:scrollbarSize="3dp"
+        android:scrollbarStyle="outsideOverlay"
+        android:scrollbarThumbVertical="@color/app_base_bg"
+        android:scrollbars="vertical"/>
+
+    <LinearLayout
+        android:id="@+id/read_bottom"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:background="@color/white"
+        android:clickable="true"
+        android:orientation="horizontal"
+        android:visibility="gone"
+        tools:visibility="visible">
+
+        <TextView
+            android:id="@+id/read_bottom_comment"
+            style="@style/web_read_bottom_style"
+            android:drawableTop="@drawable/con_comment"
+            android:text="社区"/>
+
+        <TextView
+            android:id="@+id/read_bottom_changesee"
+            style="@style/web_read_bottom_style"
+            android:drawableTop="@drawable/con_changesee"
+            android:text="翻转"/>
+
+        <TextView
+            android:id="@+id/read_bottom_catalog"
+            style="@style/web_read_bottom_style"
+            android:drawableTop="@drawable/con_catalog"
+            android:text="列表"/>
+
+        <TextView
+            android:id="@+id/read_bottom_down"
+            style="@style/web_read_bottom_style"
+            android:drawableTop="@drawable/con_down"
+            android:text="缓存"/>
+
+
+    </LinearLayout>
+</RelativeLayout>

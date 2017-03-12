@@ -50,9 +50,9 @@ small {
 
         compileSdkVersion = 25
 
-        buildToolsVersion = "25.0.0"
+        buildToolsVersion = "25.0.2"
 
-        supportVersion = "25.0.0" // replace this with an explicit value
+        supportVersion = "25.2.0" // replace this with an explicit value
 
     }
 

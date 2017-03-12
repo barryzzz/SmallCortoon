@@ -37,6 +37,15 @@
             android:theme="@style/AppTheme.Fullscreen"
             >
 
+
+        </activity>
+
+        <activity
+            android:name=".read.WebReadActivity"
+            android:theme="@style/AppTheme.Fullscreen"
+            >
+
+
         </activity>
     </application>
 
