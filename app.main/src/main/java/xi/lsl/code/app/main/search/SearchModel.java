@@ -4,6 +4,9 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.text.TextUtils;
 
+import com.google.gson.Gson;
+
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -61,16 +64,29 @@ public class SearchModel {
         }
     }
 
-    //TODO 数据存储方案存在歧义
+    //TODO 数据存储方案存在歧义 ,目前只存储一个数据，后面使用db之后再说吧
     public void setLocalSearchBrowse(Book book) {
         if (book != null) {
-            //使用数据库？？？
+            SharedPreferences sharedPreferences = mContext.getSharedPreferences(searchBrowerName, Context.MODE_PRIVATE);
+            SharedPreferences.Editor editor = sharedPreferences.edit();
+            Gson gson = new Gson();
+            String json = gson.toJson(book);
+            editor.putString(searchBrowerName, json);
+            editor.apply();
         }
     }
 
     //TODO
     public List<Book> getLocalSearchBrowse() {
-
+        SharedPreferences sharedPreferences = mContext.getSharedPreferences(searchBrowerName, Context.MODE_PRIVATE);
+        String json = sharedPreferences.getString(searchBrowerName, "");
+        if (!"".equals(json)) {
+            List<Book> books = new ArrayList<>();
+            Gson gson = new Gson();
+            Book book = gson.fromJson(json, Book.class);
+            books.add(book);
+            return books;
+        }
         return null;
     }
 

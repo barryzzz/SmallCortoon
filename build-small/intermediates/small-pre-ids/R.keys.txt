@@ -1978,3 +1978,5 @@ int color ydqgame_black
 int color ydqgame_theme_color
 int color ydqgame_white
 int layout fragment_lazy_loading
+int anim design_appbar_state_list_animator
+int dimen abc_dialog_list_padding_vertical_material

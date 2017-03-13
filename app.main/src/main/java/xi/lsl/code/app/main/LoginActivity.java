@@ -24,6 +24,7 @@ import xi.lsl.code.lib.utils.net.RxSchedulers;
 import xi.lsl.code.lib.utils.utils.EncryptionUtils;
 import xi.lsl.code.lib.utils.utils.FastOnClickUtil;
 import xi.lsl.code.lib.utils.utils.SPUtil;
+import xi.lsl.code.lib.utils.utils.Setting;
 
 /**
  * A login screen that offers login via email/password.
@@ -64,6 +65,7 @@ public class LoginActivity extends BaseActivity {
 
     /**
      * TODO 查询用户是否存在 todolist
+     *
      * @param s1 email
      * @param s2 password
      */
@@ -73,9 +75,10 @@ public class LoginActivity extends BaseActivity {
                 .flatMap(new Func1<LoginMsg, Observable<BmobReponse>>() {
                     @Override
                     public Observable<BmobReponse> call(LoginMsg loginMsg) {
-                        LoginMsg.ReturnBean bean=loginMsg.getReturn();
-                        User user = new User(bean.getId()+"",s1, s2,bean.getAvatar());
+                        LoginMsg.ReturnBean bean = loginMsg.getReturn();
+                        User user = new User(bean.getId() + "", s1, s2, bean.getAvatar());
                         SPUtil.saveObject(Constants.KEY_LOGIN, user);
+                        SPUtil.saveSetting(Setting.IS_LOGIN, Setting.CODE_1);
                         App.userInfo = user;
                         return mUserModel.insertUser(user);
                     }
@@ -102,7 +105,6 @@ public class LoginActivity extends BaseActivity {
     public void gotoReg(View v) {
         gotoActivity(RegActivity.class, false);
     }
-
 
 
 }

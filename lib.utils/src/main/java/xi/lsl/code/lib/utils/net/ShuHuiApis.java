@@ -6,9 +6,11 @@ import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
+import retrofit2.http.Query;
 import retrofit2.http.QueryMap;
 import rx.Observable;
 import xi.lsl.code.lib.utils.entity.BookEntity;
+import xi.lsl.code.lib.utils.entity.BookList;
 import xi.lsl.code.lib.utils.entity.LoginMsg;
 import xi.lsl.code.lib.utils.entity.RegMsg;
 import xi.lsl.code.lib.utils.entity.Slide;
@@ -54,5 +56,7 @@ public interface ShuHuiApis {
     @GET("ComicBooks/GetSubscribe")
     Observable<BookEntity> getSubBooks();
 
+    @GET("ComicBooks/GetChapterList")
+    Observable<BookList> getBookLists(@Query("id") String bookid, @Query("PageIndex") String pageindex);
 
 }
