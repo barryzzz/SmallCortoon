@@ -8,6 +8,7 @@ int anim abc_slide_in_bottom
 int anim abc_slide_in_top
 int anim abc_slide_out_bottom
 int anim abc_slide_out_top
+int anim design_appbar_state_list_animator
 int anim design_bottom_sheet_slide_in
 int anim design_bottom_sheet_slide_out
 int anim design_fab_in
@@ -16,7 +17,6 @@ int anim design_snackbar_in
 int anim design_snackbar_out
 int anim popu_in
 int anim popu_out
-int animator design_appbar_state_list_animator
 int attr actionBarDivider
 int attr actionBarItemBackground
 int attr actionBarPopupTheme
@@ -204,10 +204,8 @@ int attr navigationContentDescription
 int attr navigationIcon
 int attr navigationMode
 int attr overlapAnchor
-int attr paddingBottomNoButtons
 int attr paddingEnd
 int attr paddingStart
-int attr paddingTopNoTitle
 int attr panelBackground
 int attr panelMenuListTheme
 int attr panelMenuListWidth
@@ -242,7 +240,6 @@ int attr selectableItemBackgroundBorderless
 int attr showAsAction
 int attr showDividers
 int attr showText
-int attr showTitle
 int attr singleChoiceItemLayout
 int attr spanCount
 int attr spinBars
@@ -339,7 +336,6 @@ int bool abc_config_showMenuShortcutsWhenKeyboardPresent
 int color abc_background_cache_hint_selector_material_dark
 int color abc_background_cache_hint_selector_material_light
 int color abc_btn_colored_borderless_text_material
-int color abc_btn_colored_text_material
 int color abc_color_highlight_material
 int color abc_hint_foreground_material_dark
 int color abc_hint_foreground_material_light
@@ -379,7 +375,6 @@ int color colorAccent
 int color colorPrimary
 int color colorPrimaryDark
 int color colorSplash
-int color design_bottom_navigation_shadow_color
 int color design_error
 int color design_fab_shadow_end_color
 int color design_fab_shadow_mid_color
@@ -466,13 +461,11 @@ int dimen abc_dialog_fixed_height_major
 int dimen abc_dialog_fixed_height_minor
 int dimen abc_dialog_fixed_width_major
 int dimen abc_dialog_fixed_width_minor
-int dimen abc_dialog_list_padding_bottom_no_buttons
-int dimen abc_dialog_list_padding_top_no_title
+int dimen abc_dialog_list_padding_vertical_material
 int dimen abc_dialog_min_width_major
 int dimen abc_dialog_min_width_minor
 int dimen abc_dialog_padding_material
 int dimen abc_dialog_padding_top_material
-int dimen abc_dialog_title_divider_material
 int dimen abc_disabled_alpha_material_dark
 int dimen abc_disabled_alpha_material_light
 int dimen abc_dropdownitem_icon_width
@@ -512,12 +505,10 @@ int dimen abc_text_size_title_material_toolbar
 int dimen design_appbar_elevation
 int dimen design_bottom_navigation_active_item_max_width
 int dimen design_bottom_navigation_active_text_size
-int dimen design_bottom_navigation_elevation
 int dimen design_bottom_navigation_height
 int dimen design_bottom_navigation_item_max_width
 int dimen design_bottom_navigation_item_min_width
 int dimen design_bottom_navigation_margin
-int dimen design_bottom_navigation_shadow_height
 int dimen design_bottom_navigation_text_size
 int dimen design_bottom_sheet_modal_elevation
 int dimen design_bottom_sheet_peek_height_min
@@ -657,19 +648,9 @@ int drawable abc_textfield_search_activated_mtrl_alpha
 int drawable abc_textfield_search_default_mtrl_alpha
 int drawable abc_textfield_search_material
 int drawable abc_vector_test
-int drawable avd_hide_password
-int drawable avd_hide_password_1
-int drawable avd_hide_password_2
-int drawable avd_hide_password_3
-int drawable avd_show_password
-int drawable avd_show_password_1
-int drawable avd_show_password_2
-int drawable avd_show_password_3
 int drawable design_bottom_navigation_item_background
 int drawable design_fab_background
 int drawable design_ic_visibility
-int drawable design_ic_visibility_off
-int drawable design_password_eye
 int drawable design_snackbar_background
 int drawable ic_small
 int drawable navigation_empty_icon
@@ -762,7 +743,6 @@ int id line1
 int id line3
 int id listMode
 int id list_item
-int id masked
 int id media_actions
 int id middle
 int id mini
@@ -821,13 +801,9 @@ int id tabMode
 int id text
 int id text2
 int id textSpacerNoButtons
-int id textSpacerNoTitle
 int id text_input_password_toggle
-int id textinput_counter
-int id textinput_error
 int id time
 int id title
-int id titleDividerNoCustom
 int id title_template
 int id top
 int id topPanel
@@ -837,7 +813,6 @@ int id transition_scene_layoutid_cache
 int id up
 int id useLogo
 int id view_offset_helper
-int id visible
 int id withText
 int id wrap_content
 int integer abc_config_activityDefaultDur
@@ -846,8 +821,6 @@ int integer app_bar_elevation_anim_duration
 int integer bottom_sheet_slide_duration
 int integer cancel_button_image_alpha
 int integer design_snackbar_text_max_lines
-int integer hide_password_duration
-int integer show_password_duration
 int integer status_bar_notification_info_maxnum
 int layout abc_action_bar_title_item
 int layout abc_action_bar_up_container
@@ -860,7 +833,6 @@ int layout abc_activity_chooser_view
 int layout abc_activity_chooser_view_list_item
 int layout abc_alert_dialog_button_bar_material
 int layout abc_alert_dialog_material
-int layout abc_alert_dialog_title_material
 int layout abc_dialog_title_material
 int layout abc_expanded_menu_layout
 int layout abc_list_menu_item_checkbox
@@ -946,11 +918,6 @@ int string app_name
 int string appbar_scrolling_view_behavior
 int string bottom_sheet_behavior
 int string character_counter_pattern
-int string password_toggle_content_description
-int string path_password_eye
-int string path_password_eye_mask_strike_through
-int string path_password_eye_mask_visible
-int string path_password_strike_through
 int string search_menu_title
 int string status_bar_notification_info_overflow
 int style AlertDialog_AppCompat
@@ -1000,8 +967,6 @@ int style Base_TextAppearance_AppCompat_Widget_ActionBar_Title_Inverse
 int style Base_TextAppearance_AppCompat_Widget_ActionMode_Subtitle
 int style Base_TextAppearance_AppCompat_Widget_ActionMode_Title
 int style Base_TextAppearance_AppCompat_Widget_Button
-int style Base_TextAppearance_AppCompat_Widget_Button_Borderless_Colored
-int style Base_TextAppearance_AppCompat_Widget_Button_Colored
 int style Base_TextAppearance_AppCompat_Widget_Button_Inverse
 int style Base_TextAppearance_AppCompat_Widget_DropDownItem
 int style Base_TextAppearance_AppCompat_Widget_PopupMenu_Header
@@ -1190,8 +1155,6 @@ int style TextAppearance_AppCompat_Widget_ActionMode_Subtitle_Inverse
 int style TextAppearance_AppCompat_Widget_ActionMode_Title
 int style TextAppearance_AppCompat_Widget_ActionMode_Title_Inverse
 int style TextAppearance_AppCompat_Widget_Button
-int style TextAppearance_AppCompat_Widget_Button_Borderless_Colored
-int style TextAppearance_AppCompat_Widget_Button_Colored
 int style TextAppearance_AppCompat_Widget_Button_Inverse
 int style TextAppearance_AppCompat_Widget_DropDownItem
 int style TextAppearance_AppCompat_Widget_PopupMenu_Header
@@ -1385,7 +1348,6 @@ int styleable AlertDialog_buttonPanelSideLayout
 int styleable AlertDialog_listItemLayout
 int styleable AlertDialog_listLayout
 int styleable AlertDialog_multiChoiceItemLayout
-int styleable AlertDialog_showTitle
 int styleable AlertDialog_singleChoiceItemLayout
 int[] styleable AppBarLayout
 int styleable AppBarLayout_android_background
@@ -1533,7 +1495,6 @@ int styleable AppCompatTheme_windowMinWidthMajor
 int styleable AppCompatTheme_windowMinWidthMinor
 int styleable AppCompatTheme_windowNoTitle
 int[] styleable BottomNavigationView
-int styleable BottomNavigationView_elevation
 int styleable BottomNavigationView_itemBackground
 int styleable BottomNavigationView_itemIconTint
 int styleable BottomNavigationView_itemTextColor
@@ -1681,9 +1642,6 @@ int styleable PopupWindow_android_popupBackground
 int styleable PopupWindow_overlapAnchor
 int[] styleable PopupWindowBackgroundState
 int styleable PopupWindowBackgroundState_state_above_anchor
-int[] styleable RecycleListView
-int styleable RecycleListView_paddingBottomNoButtons
-int styleable RecycleListView_paddingTopNoTitle
 int[] styleable RecyclerView
 int styleable RecyclerView_android_descendantFocusability
 int styleable RecyclerView_android_orientation
@@ -1914,6 +1872,7 @@ int dimen dp_5
 int dimen dp_50
 int dimen dp_55
 int dimen sp_16
+int dimen dp_100
 int style AppTheme_Fullscreen
 int style AppTheme_NoActionBar
 int style AppTheme_NoActionBar_Transparent
@@ -1978,5 +1937,3 @@ int color ydqgame_black
 int color ydqgame_theme_color
 int color ydqgame_white
 int layout fragment_lazy_loading
-int anim design_appbar_state_list_animator
-int dimen abc_dialog_list_padding_vertical_material

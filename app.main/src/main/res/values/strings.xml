@@ -21,5 +21,6 @@
     <string name="no_serarch">暂无搜索历史</string>
     <string name="search">搜索</string>
     <string name="jump">%1$d s 跳转</string>
+    <string name="splash_tip">请输入需要翻译的文字内容或者网页地址</string>
 
 </resources>

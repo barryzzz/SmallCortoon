@@ -81,6 +81,7 @@ int dimen dp_5 0x7904000f
 int dimen dp_50 0x79040010
 int dimen dp_55 0x79040011
 int dimen sp_16 0x79040012
+int dimen dp_100 0x79040013
 int style AppTheme_Fullscreen 0x79050001
 int style AppTheme_NoActionBar 0x79050002
 int style AppTheme_NoActionBar_Transparent 0x79050003

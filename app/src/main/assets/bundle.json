@@ -5,7 +5,7 @@
       "uri": "main",
       "pkg": "xi.lsl.code.app.main",
       "rules": {
-        "login": "LoginActivity"
+        "login": "SplashActivity"
       }
     },
     {

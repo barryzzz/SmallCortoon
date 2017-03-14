@@ -25,12 +25,13 @@ public class LaunchActivity extends Activity {
         Small.setUp(this, new Small.OnCompleteListener() {
             @Override
             public void onComplete() {
-                if (Small.openUri("main/login", LaunchActivity.this)) {
+                if (Small.openUri("main", LaunchActivity.this)) {
                     finish();
                 } else {
                     Toast.makeText(LaunchActivity.this,
                             "Open failed, see log for detail!",
                             Toast.LENGTH_LONG).show();
+
                 }
             }
         });
