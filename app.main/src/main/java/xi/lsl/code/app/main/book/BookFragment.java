@@ -1,56 +1,41 @@
 package xi.lsl.code.app.main.book;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.design.widget.TabLayout;
-import android.support.v4.app.Fragment;
-import android.support.v4.view.ViewPager;
+import android.support.v7.widget.DefaultItemAnimator;
+import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.widget.TextView;
 
-import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
-import me.relex.circleindicator.CircleIndicator;
-import rx.functions.Action0;
-import rx.functions.Action1;
-import rx.subscriptions.CompositeSubscription;
 import xi.lsl.code.app.main.R;
-import xi.lsl.code.app.main.book.fan.FanFragment;
-import xi.lsl.code.app.main.book.hot.HotFragment;
-import xi.lsl.code.app.main.book.mic.MadeInChinaFragment;
-import xi.lsl.code.app.main.book.mouse.MouseFragment;
-import xi.lsl.code.lib.utils.base.MyPageAdapter;
 import xi.lsl.code.lib.utils.base.widget.LazyFragment;
-import xi.lsl.code.lib.utils.entity.Slide;
-import xi.lsl.code.lib.utils.net.Nets;
-import xi.lsl.code.lib.utils.net.RxSchedulers;
 
 /**
+ * book
  * Created by lishoulin on 2017/2/13.
  */
 
-public class BookFragment extends LazyFragment {
+public class BookFragment extends LazyFragment implements BookFlAdapter.OnBookClickLisenter {
 
+    @SuppressLint("StaticFieldLeak")
     private static BookFragment fragment;
 
-    private CompositeSubscription mCompositeSubscription;
-    private List<Slide.ListBean> mListBeen = null;
-    private ShowPageAdapter mPageAdapter;
-    private ShowPageHandler mPageHandler;
-    private List<Fragment> fragments = null;
-    private static final String[] mTitles = new String[]{"热血", "国产", "同人", "鼠绘"};
+    @InjectView(R.id.book_rv)
+    RecyclerView mRecyclerView;
 
-    @InjectView(R.id.book_vp)
-    ViewPager mViewPager;
-    @InjectView(R.id.book_vp_tip)
-    CircleIndicator mCircleIndicator;
-    @InjectView(R.id.book_tb)
-    TabLayout mTabLayout;
-    @InjectView(R.id.book_vp_content)
-    ViewPager mContentViewPager;
+    @InjectView(R.id.title_title)
+    TextView mTextView;
 
+
+    private BookFlAdapter mBookFlAdapter;
 
     public static BookFragment newInstance() {
         return fragment == null ? new BookFragment() : fragment;
@@ -59,98 +44,69 @@ public class BookFragment extends LazyFragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        mCompositeSubscription = new CompositeSubscription();
 
     }
 
-    private void initView() {
-        if (fragments == null || fragments.size() < 0) {
-            fragments = new ArrayList<>(4);
-            fragments.add(HotFragment.newInstance());
-            fragments.add(MadeInChinaFragment.newInstance());
-            fragments.add(FanFragment.newInstance());
-            fragments.add(MouseFragment.newInstance());
-        }
-
-    }
 
     @Override
     protected void onCreateViewLazy(Bundle savedInstanceState) {
         super.onCreateViewLazy(savedInstanceState);
         setContentView(R.layout.fragment_book);
         ButterKnife.inject(this, getContentView());
-        if (mListBeen == null) {
-            mListBeen = new ArrayList<Slide.ListBean>();
-        }
-        mPageAdapter = new ShowPageAdapter(mListBeen, getContext());
-        mViewPager.setAdapter(mPageAdapter);
-        mCircleIndicator.setViewPager(mViewPager);
-        initView();
-        mTabLayout.setTabMode(TabLayout.MODE_FIXED);
-        mTabLayout.addTab(mTabLayout.newTab().setText(mTitles[0]));
-        mTabLayout.addTab(mTabLayout.newTab().setText(mTitles[1]));
-        mTabLayout.addTab(mTabLayout.newTab().setText(mTitles[2]));
-        mTabLayout.addTab(mTabLayout.newTab().setText(mTitles[3]));
+        mTextView.setText("分类");
 
-        mContentViewPager.setAdapter(new MyPageAdapter(getFragmentManager(), fragments, mTitles));
-        mTabLayout.setupWithViewPager(mContentViewPager);
+        mRecyclerView.setLayoutManager(new GridLayoutManager(getContext(), 3));
+        mRecyclerView.setItemAnimator(new DefaultItemAnimator());
+        mBookFlAdapter = new BookFlAdapter(getContext(), getFl());
+        mBookFlAdapter.setOnBookClickLisenter(this);
+        mRecyclerView.setAdapter(mBookFlAdapter);
 
-        lazyLoad();
     }
 
 
     @Override
     public void lazyLoad() {
-        try {
-            getSlideData();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
-    private void iniSlideView(final List<Slide.ListBean> beans) {
-        mViewPager.setAdapter(new ShowPageAdapter(beans, getContext()));
-        mPageAdapter.notifyDataSetChanged();
-        mPageHandler = new ShowPageHandler();
-        mPageHandler.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                mPageHandler.showPage(mViewPager, beans.size());
-            }
-        }, 6_000);
 
     }
 
-
-    private void getSlideData() throws IOException {
-
-        mCompositeSubscription.add(Nets.getCommonApis().getSlide()
-                .compose(RxSchedulers.<Slide>io_main())
-                .subscribe(new Action1<Slide>() {
-                    @Override
-                    public void call(Slide slide) {
-                        if (slide.getList() != null && slide.getList().size() > 0) {
-                            iniSlideView(slide.getList());
-                        }
-                    }
-                }, new Action1<Throwable>() {
-                    @Override
-                    public void call(Throwable throwable) {
-
-                    }
-                }, new Action0() {
-                    @Override
-                    public void call() {
-
-                    }
-                })
-        );
-
-    }
 
     @Override
     protected void onDestroyViewLazy() {
         super.onDestroyViewLazy();
-        mCompositeSubscription.clear();
+
+    }
+
+    @Override
+    public void onBookClick(int position) {
+        toast(position + "");
+        Map<String, String> map = new HashMap<>();
+        map.put("ClassifyId", getFl().get(position).classifyIds);
+        map.put("Titles", getFl().get(position).title);
+
+        gotoActivity(BookFlActivity.class, map);
+    }
+
+
+    private List<FlBean> getFl() {
+        List<FlBean> list = new ArrayList<>();
+        list.add(new FlBean("热血", "0", "https://qlogo4.store.qq.com/qzone/408930131/408930131/100?1465139612"));
+        list.add(new FlBean("国产", "1", "https://qlogo4.store.qq.com/qzone/408930131/408930131/100?1465139612"));
+        list.add(new FlBean("同人", "2", "https://qlogo4.store.qq.com/qzone/408930131/408930131/100?1465139612"));
+        list.add(new FlBean("鼠绘", "3", "https://qlogo4.store.qq.com/qzone/408930131/408930131/100?1465139612"));
+
+        return list;
+
+    }
+
+    public class FlBean {
+        public String title;
+        public String classifyIds;
+        public String url;
+
+        FlBean(String title, String classifyIds, String url) {
+            this.title = title;
+            this.classifyIds = classifyIds;
+            this.url = url;
+        }
     }
 }

@@ -46,7 +46,6 @@ public class SearchPresenter implements SearchContract.Presenter {
             public void call() {
                 mView.dissloading();
                 mModel.setSearch(str);
-                getLocalSearch();
             }
         }));
     }

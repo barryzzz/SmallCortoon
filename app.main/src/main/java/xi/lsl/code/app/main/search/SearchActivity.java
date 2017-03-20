@@ -23,7 +23,7 @@ import xi.lsl.code.lib.utils.base.widget.FlowLayout;
 import xi.lsl.code.lib.utils.entity.Book;
 
 /**
- * Description:
+ * Description: 搜索界面
  * Author   :lishoulin
  * Date     :2017/2/28.
  */
@@ -44,6 +44,7 @@ public class SearchActivity extends BaseActivity implements SearchContract.View 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         getWindow().requestFeature(Window.FEATURE_CONTENT_TRANSITIONS);
         getWindow().setEnterTransition(new Explode().setDuration(1000));
         getWindow().setExitTransition(null);
@@ -123,12 +124,13 @@ public class SearchActivity extends BaseActivity implements SearchContract.View 
 
     @Override
     public void showSearchBooks(List<Book> books) {
-
+        //读取 localsearch
+        //显示搜索
     }
 
     @Override
     public void faild(String msg) {
-
+        toast(msg);
     }
 
     @Override

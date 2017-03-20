@@ -13,7 +13,6 @@ import xi.lsl.code.lib.utils.entity.BookEntity;
 import xi.lsl.code.lib.utils.entity.BookList;
 import xi.lsl.code.lib.utils.entity.LoginMsg;
 import xi.lsl.code.lib.utils.entity.RegMsg;
-import xi.lsl.code.lib.utils.entity.Slide;
 import xi.lsl.code.lib.utils.entity.SubEntity;
 
 /**
@@ -58,5 +57,6 @@ public interface ShuHuiApis {
 
     @GET("ComicBooks/GetChapterList")
     Observable<BookList> getBookLists(@Query("id") String bookid, @Query("PageIndex") String pageindex);
+
 
 }

@@ -3,6 +3,7 @@
           package="xi.lsl.code.app.main">
 
     <uses-permission android:name="android.permission.INTERNET"/>
+
     <application
         android:name=".App"
         android:allowBackup="true"
@@ -12,14 +13,15 @@
         android:theme="@style/AppTheme">
         <activity
             android:name=".WelcomeActivity"
-            android:theme="@style/AppTheme.Fullscreen"
-            >
-
+            android:theme="@style/AppTheme.Fullscreen">
         </activity>
         <activity
             android:name=".SplashActivity"
-            android:theme="@style/AppTheme.Fullscreen"
-            >
+            android:theme="@style/AppTheme.Fullscreen">
+        </activity>
+        <activity
+            android:name=".LoginActivity"
+            android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
 
@@ -27,35 +29,22 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".LoginActivity"
-            android:theme="@style/AppTheme.NoActionBar">
-
-        </activity>
-        <activity
             android:name=".RegActivity"
             android:theme="@style/AppTheme.NoActionBar">
-
         </activity>
         <activity
             android:name=".main.MainActivity"
-            android:theme="@style/AppTheme.Fullscreen"
-            >
-
+            android:theme="@style/AppTheme.Fullscreen">
         </activity>
         <activity
             android:name=".search.SearchActivity"
-            android:theme="@style/AppTheme.Fullscreen"
-            >
-
-
+            android:theme="@style/AppTheme.Fullscreen">
         </activity>
-
         <activity
             android:name=".read.WebReadActivity"
-            android:theme="@style/AppTheme.Fullscreen"
-            >
-
-
+            android:theme="@style/AppTheme.Fullscreen">
+        </activity>
+        <activity android:name=".book.BookFlActivity">
         </activity>
     </application>
 
