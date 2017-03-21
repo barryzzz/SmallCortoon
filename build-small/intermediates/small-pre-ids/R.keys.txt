@@ -1881,6 +1881,7 @@ int drawable searchone
 int drawable searchtwo
 int drawable setting_icon
 int drawable system_selector
+int drawable loading
 int string about
 int string action_reg_in
 int string action_sign_in
