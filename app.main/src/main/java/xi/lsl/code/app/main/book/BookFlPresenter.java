@@ -6,6 +6,7 @@ import rx.subscriptions.CompositeSubscription;
 import xi.lsl.code.lib.utils.entity.BookEntity;
 
 /**
+ * book presenter
  * Created by lishoulin on 2017/3/20.
  */
 

@@ -44,7 +44,9 @@
             android:name=".read.WebReadActivity"
             android:theme="@style/AppTheme.Fullscreen">
         </activity>
-        <activity android:name=".book.BookFlActivity">
+        <activity
+            android:name=".book.BookFlActivity"
+            android:theme="@style/AppTheme.NoActionBar">
         </activity>
         <activity
             android:name=".about.SettingsActivity"
