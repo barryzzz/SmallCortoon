@@ -46,6 +46,11 @@
         </activity>
         <activity android:name=".book.BookFlActivity">
         </activity>
+        <activity
+            android:name=".about.SettingsActivity"
+            android:label="@string/title_activity_settings">
+        </activity>
+
     </application>
 
 </manifest>

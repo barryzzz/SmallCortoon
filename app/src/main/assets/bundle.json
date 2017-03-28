@@ -26,6 +26,10 @@
     {
       "uri": "lib.utils",
       "pkg": "xi.lsl.code.lib.utils"
+    },
+    {
+      "uri": "about",
+      "pkg": "xi.lsl.web.about"
     }
   ]
 }
