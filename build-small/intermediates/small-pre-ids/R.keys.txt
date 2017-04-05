@@ -1863,6 +1863,7 @@ int drawable home_tab_right_selector
 int drawable home_tab_right_two
 int drawable homeone
 int drawable hometwo
+int drawable loading
 int drawable login_btn
 int drawable login_reg_btn
 int drawable logo
@@ -1881,7 +1882,6 @@ int drawable searchone
 int drawable searchtwo
 int drawable setting_icon
 int drawable system_selector
-int drawable loading
 int string about
 int string action_reg_in
 int string action_sign_in

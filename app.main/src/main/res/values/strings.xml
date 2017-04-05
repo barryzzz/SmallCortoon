@@ -24,6 +24,8 @@
     <string name="splash_tip">请输入需要翻译的文字内容或者网页地址</string>
     <string name="title_text">番外篇</string>
     <string name="title_activity_settings">设置</string>
+    <string name="auther">作者:</string>
+    <string name="hot">热度:%1$s</string>
 
     <!-- Strings related to Settings -->
 
