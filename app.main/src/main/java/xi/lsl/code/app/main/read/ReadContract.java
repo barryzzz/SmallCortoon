@@ -19,14 +19,14 @@ public interface ReadContract {
          *
          * @param data
          */
-        void showBookList(List<Chapter> data);
+        void showChapterList(List<Chapter> data);
 
         /**
          * 查看内容
          *
          * @param url 返回内容读取的url
          */
-        void showBook(String url);
+        void showChapter(String url);
 
         /**
          * 抛出错误信息
@@ -41,11 +41,13 @@ public interface ReadContract {
         /**
          * 获取集数目录
          */
-        void getBookLists(String bookid, int PageIndex);
+        void loadChapter(String bookid, int PageIndex);
 
         /**
          * @param id 集数
          */
-        void setBookId(String id);
+        void setChapterId(String id);
+
+        void saveBookAndChapter(String bookid, String ChapterId, String BookName, String ChapterName);
     }
 }

@@ -5,7 +5,9 @@ import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.widget.PopupWindowCompat;
-import android.util.Log;
+import android.support.v7.widget.DefaultItemAnimator;
+import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
@@ -20,19 +22,16 @@ import android.widget.PopupWindow;
 
 import net.wequick.small.Small;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 import butterknife.OnClick;
-import rx.functions.Action0;
-import rx.functions.Action1;
-import rx.subscriptions.CompositeSubscription;
 import xi.lsl.code.app.main.R;
 import xi.lsl.code.lib.utils.base.BaseActivity;
 import xi.lsl.code.lib.utils.base.widget.ReadWebView;
-import xi.lsl.code.lib.utils.entity.BmobReponse;
 import xi.lsl.code.lib.utils.entity.Chapter;
-import xi.lsl.code.lib.utils.entity.Result;
-import xi.lsl.code.lib.utils.net.CommonApis;
 import xi.lsl.code.lib.utils.net.Constants;
 import xi.lsl.code.lib.utils.utils.ScreenUtil;
 
@@ -42,7 +41,7 @@ import xi.lsl.code.lib.utils.utils.ScreenUtil;
  * Date     :2017/2/24.
  */
 
-public class WebReadActivity extends BaseActivity {
+public class WebReadActivity extends BaseActivity implements ChapterListAdapter.onChapterClickListener, ReadContract.View {
     public static final String URL = "url";
     public static final String TITLE = "title";
     @InjectView(R.id.read_webview)
@@ -50,15 +49,17 @@ public class WebReadActivity extends BaseActivity {
     @InjectView(R.id.read_bottom)
     LinearLayout mBottomLinearLayout;
 
-    private String url;
     private String CHAPTER_ID; //章节id
     private String CHAPTER_TITLE;
     private String BOOK_ID;//书本id
     private String BOOK_NAME; //书本名称
-    private CompositeSubscription mSubscription;
-    private ReadModel mReadModel;
+    private ReadPresenter mPresenter;
 
     private PopupWindow mPopupWindow;
+
+
+    private ChapterListAdapter mChapterListAdapter;
+    private List<Chapter> mChapters;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -70,12 +71,10 @@ public class WebReadActivity extends BaseActivity {
         CHAPTER_TITLE = getIntent().getStringExtra(Constants.WEB_CHAPTER_TITLE);
         BOOK_ID = getIntent().getStringExtra(Constants.WEB_BOOK_ID);
         BOOK_NAME = getIntent().getStringExtra(Constants.WEB_BOOK_NAME);
-        url = CommonApis.URL_IMG_CHAPTER + CHAPTER_ID;
 
-        mSubscription = new CompositeSubscription();
-        mReadModel = new ReadModel();
-        if (CHAPTER_ID != null && !"".equals(CHAPTER_ID))
-            saveBook(BOOK_ID, CHAPTER_ID, BOOK_NAME, CHAPTER_TITLE);
+
+        mPresenter = new ReadPresenter(new ReadModel(), this);
+
 
         iniWebView();
         iniPopuWindow();
@@ -83,51 +82,6 @@ public class WebReadActivity extends BaseActivity {
 
     }
 
-    /**
-     * 读取章节数据
-     */
-    private void loadChapter() {
-        if (BOOK_ID != null) {
-            mSubscription.add(mReadModel.queryChapterLists(BOOK_ID, "20").subscribe(new Action1<Result<Chapter>>() {
-                @Override
-                public void call(Result<Chapter> bookList) {
-
-                }
-            }, new Action1<Throwable>() {
-                @Override
-                public void call(Throwable throwable) {
-
-                }
-            }, new Action0() {
-                @Override
-                public void call() {
-
-                }
-            }));
-        }
-    }
-
-
-    private void saveBook(String bookId, String ChapterId, String BookName, String ChapterName) {
-        if (ChapterId != null && BookName != null) {
-            mSubscription.add(mReadModel.insertBook(bookId, ChapterId, BookName, ChapterName).subscribe(new Action1<BmobReponse>() {
-                @Override
-                public void call(BmobReponse bmobReponse) {
-                    Log.e("info--》", "code" + bmobReponse.code);
-                }
-            }, new Action1<Throwable>() {
-                @Override
-                public void call(Throwable throwable) {
-
-                }
-            }, new Action0() {
-                @Override
-                public void call() {
-
-                }
-            }));
-        }
-    }
 
     private void iniPopuWindow() {
 
@@ -142,8 +96,24 @@ public class WebReadActivity extends BaseActivity {
 
 
         View view = mPopupWindow.getContentView();
-        ButterKnife.inject(view);
 
+        RecyclerView popuChapterView = (RecyclerView) view.findViewById(R.id.popu_chapterlist);
+
+        popuChapterView.setLayoutManager(new GridLayoutManager(mContext, 4));
+        popuChapterView.setItemAnimator(new DefaultItemAnimator());
+
+        mChapters = new ArrayList<>();
+        mChapterListAdapter = new ChapterListAdapter(mChapters);
+        mChapterListAdapter.setOnChapterClickListener(this);
+        popuChapterView.setAdapter(mChapterListAdapter);
+
+    }
+
+    @Override
+    public void onChapterClick(View v, Chapter chapter) {
+        CHAPTER_ID = String.valueOf(chapter.getId());
+        CHAPTER_TITLE = String.valueOf(chapter.getTitle());
+        mPresenter.setChapterId(CHAPTER_ID);
     }
 
     private void iniWebView() {
@@ -170,10 +140,7 @@ public class WebReadActivity extends BaseActivity {
 //                }
 //            }
 //        });
-        if (url != null) {
-            mWebView.loadUrl(url);
-        }
-
+        mPresenter.setChapterId(CHAPTER_ID);
     }
 
     @OnClick({R.id.read_bottom_comment, R.id.read_bottom_changesee, R.id.read_bottom_catalog, R.id.read_bottom_down})
@@ -200,6 +167,7 @@ public class WebReadActivity extends BaseActivity {
                     if (mPopupWindow.isShowing()) {
                         mPopupWindow.dismiss();
                     } else {
+                        mPresenter.loadChapter(BOOK_ID, 0);
                         PopupWindowCompat.showAsDropDown(mPopupWindow, mBottomLinearLayout, Gravity.TOP, 0, 0);
                     }
                 }
@@ -212,24 +180,33 @@ public class WebReadActivity extends BaseActivity {
     }
 
 
-    private synchronized void showBar() {
-        mBottomLinearLayout.setVisibility(View.VISIBLE);
-        switchStatusBar(false);
-        getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN);
+    @Override
+    public void setPresenter(ReadContract.Presenter presenter) {
+//        mPresenter = (ReadPresenter) presenter;
     }
 
-    private synchronized void hideBar() {
-        mBottomLinearLayout.setVisibility(View.GONE);
-        switchStatusBar(true);
-        getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LOW_PROFILE);
-    }
 
-    public void swithchBar() {
-        if (mBottomLinearLayout.getVisibility() == View.GONE) {
-            showBar();
-        } else {
-            hideBar();
+    @Override
+    public void showChapterList(List<Chapter> data) {
+        if (data != null && data.size() > 0) {
+            mChapters.addAll(data);
+            mChapterListAdapter.notifyItemRangeInserted(0, mChapters.size());
         }
+    }
+
+    @Override
+    public void showChapter(String url) {
+
+        if (url != null) {
+            mWebView.loadUrl(url);
+            if (CHAPTER_ID != null && !"".equals(CHAPTER_ID))
+                mPresenter.saveBookAndChapter(BOOK_ID, CHAPTER_ID, BOOK_NAME, CHAPTER_TITLE);
+        }
+    }
+
+    @Override
+    public void faild(String msg) {
+
     }
 
 
@@ -275,21 +252,6 @@ public class WebReadActivity extends BaseActivity {
         }
     }
 
-
-    @Override
-    protected void onSaveInstanceState(Bundle outState) {
-        super.onSaveInstanceState(outState);
-        outState.putString(URL, url);
-        outState.putString(TITLE, CHAPTER_TITLE);
-    }
-
-    @Override
-    protected void onRestoreInstanceState(Bundle savedInstanceState) {
-        super.onRestoreInstanceState(savedInstanceState);
-        url = savedInstanceState.getString(URL);
-        CHAPTER_TITLE = savedInstanceState.getString(TITLE);
-    }
-
     @Override
     protected void onPause() {
         super.onPause();
@@ -302,6 +264,7 @@ public class WebReadActivity extends BaseActivity {
     @Override
     protected void onResume() {
         super.onResume();
+        mPresenter.subscribe();
         if (mWebView != null)
             mWebView.onResume();
     }
@@ -309,7 +272,41 @@ public class WebReadActivity extends BaseActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        mPresenter.unsubscribe();
         if (mWebView != null)
             mWebView.destroy();
     }
+
+
+    private synchronized void showBar() {
+        mBottomLinearLayout.setVisibility(View.VISIBLE);
+        switchStatusBar(false);
+        getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN);
+    }
+
+    private synchronized void hideBar() {
+        mBottomLinearLayout.setVisibility(View.GONE);
+        switchStatusBar(true);
+        getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LOW_PROFILE);
+    }
+
+    public void swithchBar() {
+        if (mBottomLinearLayout.getVisibility() == View.GONE) {
+            showBar();
+        } else {
+            hideBar();
+        }
+    }
+
+    @Override
+    public void showloading() {
+
+    }
+
+    @Override
+    public void dissloading() {
+
+    }
+
+
 }

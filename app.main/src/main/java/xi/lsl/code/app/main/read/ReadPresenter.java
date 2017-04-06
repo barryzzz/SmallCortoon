@@ -1,8 +1,11 @@
 package xi.lsl.code.app.main.read;
 
+import android.util.Log;
+
 import rx.functions.Action0;
 import rx.functions.Action1;
 import rx.subscriptions.CompositeSubscription;
+import xi.lsl.code.lib.utils.entity.BmobReponse;
 import xi.lsl.code.lib.utils.entity.Chapter;
 import xi.lsl.code.lib.utils.entity.Result;
 import xi.lsl.code.lib.utils.net.CommonApis;
@@ -24,12 +27,12 @@ public class ReadPresenter implements ReadContract.Presenter {
     }
 
     @Override
-    public void getBookLists(final String bookid, int PageIndex) {
+    public void loadChapter(final String bookid, int PageIndex) {
         mView.showloading();
         mReadModel.queryChapterLists(bookid, String.valueOf(PageIndex)).subscribe(new Action1<Result<Chapter>>() {
             @Override
             public void call(Result<Chapter> bookList) {
-                mView.showBookList(bookList.getReturn().getT());
+                mView.showChapterList(bookList.getReturn().getT());
             }
         }, new Action1<Throwable>() {
             @Override
@@ -45,9 +48,29 @@ public class ReadPresenter implements ReadContract.Presenter {
     }
 
     @Override
-    public void setBookId(String id) {
+    public void setChapterId(String id) {
         String url = CommonApis.URL_IMG_CHAPTER + id;
-        mView.showBook(url);
+        mView.showChapter(url);
+    }
+
+    @Override
+    public void saveBookAndChapter(String bookId, String ChapterId, String BookName, String ChapterName) {
+        mSubscription.add(mReadModel.insertBook(bookId, ChapterId, BookName, ChapterName).subscribe(new Action1<BmobReponse>() {
+            @Override
+            public void call(BmobReponse bmobReponse) {
+                Log.e("info--》", "code" + bmobReponse.code);
+            }
+        }, new Action1<Throwable>() {
+            @Override
+            public void call(Throwable throwable) {
+
+            }
+        }, new Action0() {
+            @Override
+            public void call() {
+
+            }
+        }));
     }
 
     @Override
