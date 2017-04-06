@@ -1,5 +1,11 @@
 package xi.lsl.code.app.main.home;
 
+import com.google.gson.Gson;
+import com.google.gson.JsonArray;
+import com.google.gson.reflect.TypeToken;
+
+import java.util.List;
+
 import rx.functions.Action0;
 import rx.functions.Action1;
 import rx.subscriptions.CompositeSubscription;
@@ -30,9 +36,14 @@ public class SubBookPresenter implements SubBookContract.Presenter {
     public void loadSubBooks() {
         compositeSubscription.add(subBookModel.getSubBooks().subscribe(new Action1<Result<Book>>() {
             @Override
-            public void call(Result<Book> books) {
-                if (books != null && books.getReturn().getT().size() > 0) {
-                    view.showBooks(books.getReturn().getT());
+            public void call(Result<Book> bookEntity) {
+                if (bookEntity != null && bookEntity.getReturn().getT().size() > 0) {
+                    Gson gson = new Gson();
+                    JsonArray jsonArray = gson.toJsonTree(bookEntity.getReturn().getT()).getAsJsonArray();
+                    List<Book> books = gson.fromJson(jsonArray.toString(), new TypeToken<List<Book>>() {
+                    }.getType());
+
+                    view.showBooks(books);
                 } else {
                     view.showNoBooks();
                 }
