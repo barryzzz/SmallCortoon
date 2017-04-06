@@ -4,7 +4,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 import rx.Observable;
-import xi.lsl.code.lib.utils.entity.BookEntity;
+import xi.lsl.code.lib.utils.entity.Book;
+import xi.lsl.code.lib.utils.entity.Result;
 import xi.lsl.code.lib.utils.entity.SubEntity;
 import xi.lsl.code.lib.utils.net.Nets;
 import xi.lsl.code.lib.utils.net.RxSchedulers;
@@ -21,8 +22,8 @@ public class SubBookModel {
      *
      * @return
      */
-    public Observable<BookEntity> getSubBooks() {
-        return Nets.getShuHuiApis().getSubBooks().compose(RxSchedulers.<BookEntity>io_main());
+    public Observable<Result<Book>> getSubBooks() {
+        return Nets.getShuHuiApis().getSubBooks().compose(RxSchedulers.<Result<Book>>io_main());
     }
 
 

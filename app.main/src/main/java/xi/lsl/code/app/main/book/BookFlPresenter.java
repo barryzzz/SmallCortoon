@@ -3,7 +3,8 @@ package xi.lsl.code.app.main.book;
 import rx.functions.Action0;
 import rx.functions.Action1;
 import rx.subscriptions.CompositeSubscription;
-import xi.lsl.code.lib.utils.entity.BookEntity;
+import xi.lsl.code.lib.utils.entity.Book;
+import xi.lsl.code.lib.utils.entity.Result;
 
 /**
  * book presenter
@@ -23,11 +24,11 @@ public class BookFlPresenter implements BookFlContract.Presenter {
     @Override
     public void getCategoryData(String ClassifyId, String Size, String PageIndex) {
         mView.showloading();
-        mSubscription.add(mBookFlModel.getCategoryData(ClassifyId, "30", PageIndex).subscribe(new Action1<BookEntity>() {
+        mSubscription.add(mBookFlModel.getCategoryData(ClassifyId, "30", PageIndex).subscribe(new Action1<Result<Book>>() {
             @Override
-            public void call(BookEntity bookEntity) {
-                if (bookEntity.getReturn().getList() != null) {
-                    mView.showBooks(bookEntity.getReturn().getList());
+            public void call(Result<Book> bookEntity) {
+                if (bookEntity != null) {
+                    mView.showBooks(bookEntity.getReturn().getT());
                 }
             }
         }, new Action1<Throwable>() {

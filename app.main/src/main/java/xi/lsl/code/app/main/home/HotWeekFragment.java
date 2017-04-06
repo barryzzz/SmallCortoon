@@ -88,9 +88,14 @@ public class HotWeekFragment extends LazyFragment implements BookContract.View {
             @Override
             public void onItemClick(View v, int position) {
                 if (FastOnClickUtil.fastClick(1000)) {
+                    Book book = books.get(position);
+
                     Map<String, String> map = new HashMap<String, String>();
-                    map.put(Constants.WEB_CHAPTER_ID, String.valueOf(books.get(position).getLastChapter().getId()));
-                    map.put(Constants.WEB_TITLE, books.get(position).getTitle());
+                    map.put(Constants.WEB_CHAPTER_ID, String.valueOf(book.getLastChapter().getId()));
+                    map.put(Constants.WEB_BOOK_NAME, book.getTitle());
+                    map.put(Constants.WEB_BOOK_ID, String.valueOf(book.getId()));
+                    map.put(Constants.WEB_CHAPTER_TITLE, book.getLastChapter().getTitle());
+
                     gotoActivity(WebReadActivity.class, map);
                 } else {
                     toast("重复点击啦");

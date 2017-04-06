@@ -10,7 +10,8 @@ import okhttp3.RequestBody;
 import rx.Observable;
 import xi.lsl.code.lib.utils.entity.BmobBook;
 import xi.lsl.code.lib.utils.entity.BmobReponse;
-import xi.lsl.code.lib.utils.entity.BookList;
+import xi.lsl.code.lib.utils.entity.Chapter;
+import xi.lsl.code.lib.utils.entity.Result;
 import xi.lsl.code.lib.utils.net.Nets;
 import xi.lsl.code.lib.utils.net.RxSchedulers;
 
@@ -26,16 +27,18 @@ public class ReadModel {
     }
 
     /**
-     * 存储书本信息到bmob上面
-     *
      * @param bookid
-     * @param bookname
+     * @param ChapterId
+     * @param BookName
+     * @param ChapterName
      * @return
      */
-    public Observable<BmobReponse> insertBook(String bookid, String bookname) {
+    public Observable<BmobReponse> insertBook(String bookid, String ChapterId, String BookName, String ChapterName) {
         Map<String, String> map = new HashMap<>();
+        map.put("ChapterId", ChapterId);
+        map.put("book_name", BookName);
         map.put("book_id", bookid);
-        map.put("book_name", bookname);
+        map.put("ChapterName", ChapterName);
         return Nets.getBmobApis().InsertBooks(createBody(map)).compose(RxSchedulers.<BmobReponse>io_main());
     }
 
@@ -57,8 +60,8 @@ public class ReadModel {
      * @param PageIndex 页码
      * @return 书本集数信息
      */
-    public Observable<BookList> queryBookLists(String bookid, String PageIndex) {
-        return Nets.getShuHuiApis().getBookLists(bookid, PageIndex).compose(RxSchedulers.<BookList>io_main());
+    public Observable<Result<Chapter>> queryChapterLists(String bookid, String PageIndex) {
+        return Nets.getShuHuiApis().getBookLists(bookid, PageIndex).compose(RxSchedulers.<Result<Chapter>>io_main());
     }
 
 

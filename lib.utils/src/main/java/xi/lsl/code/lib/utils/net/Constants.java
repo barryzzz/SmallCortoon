@@ -11,6 +11,8 @@ public class Constants {
 
     //用于web read
     public static final String WEB_URL = "url";
-    public static final String WEB_TITLE = "title";
+    public static final String WEB_CHAPTER_TITLE = "title";
     public static final String WEB_CHAPTER_ID = "ChapterId";
+    public static final String WEB_BOOK_ID = "bookId";
+    public static final String WEB_BOOK_NAME = "bookname";
 }

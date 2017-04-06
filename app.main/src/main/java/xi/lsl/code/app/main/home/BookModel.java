@@ -7,7 +7,7 @@ import java.util.Map;
 
 import rx.Observable;
 import xi.lsl.code.lib.utils.entity.Book;
-import xi.lsl.code.lib.utils.entity.BookEntity;
+import xi.lsl.code.lib.utils.entity.Result;
 import xi.lsl.code.lib.utils.entity.SubEntity;
 import xi.lsl.code.lib.utils.net.Nets;
 import xi.lsl.code.lib.utils.net.RxSchedulers;
@@ -26,8 +26,8 @@ public class BookModel {
      * @param map
      * @return
      */
-    public Observable<BookEntity> getBook(Map<String, String> map) {
-        return Nets.getShuHuiApis().getBooks(map).compose(RxSchedulers.<BookEntity>io_main());
+    public Observable<Result<Book>> getBook(Map<String, String> map) {
+        return Nets.getShuHuiApis().getBooks(map).compose(RxSchedulers.<Result<Book>>io_main());
     }
 
     /**
@@ -38,7 +38,7 @@ public class BookModel {
      * @param page
      * @return
      */
-    public Observable<BookEntity> getWeekBook(String days, String Subscribe, int page) {
+    public Observable<Result<Book>> getWeekBook(String days, String Subscribe, int page) {
         final List<Book> bookList = new ArrayList<>();
         Map<String, String> map = new HashMap<>();
         map.put("Days", days);
@@ -51,11 +51,11 @@ public class BookModel {
     /**
      * 获取订阅的book list
      */
-    public Observable<BookEntity> getSubBook() {
+    public Observable<Result<Book>> getSubBook() {
         Map<String, String> map = new HashMap<>();
         map.put("Subscribe", "\"0\"");
 
-        return getBook(map).compose(RxSchedulers.<BookEntity>io_main());
+        return getBook(map).compose(RxSchedulers.<Result<Book>>io_main());
     }
 
 

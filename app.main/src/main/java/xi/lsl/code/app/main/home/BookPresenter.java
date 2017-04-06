@@ -3,9 +3,8 @@ package xi.lsl.code.app.main.home;
 import rx.functions.Action0;
 import rx.functions.Action1;
 import rx.subscriptions.CompositeSubscription;
-import xi.lsl.code.app.main.home.BookContract;
-import xi.lsl.code.app.main.home.BookModel;
-import xi.lsl.code.lib.utils.entity.BookEntity;
+import xi.lsl.code.lib.utils.entity.Book;
+import xi.lsl.code.lib.utils.entity.Result;
 import xi.lsl.code.lib.utils.entity.SubEntity;
 
 /**
@@ -29,11 +28,12 @@ public class BookPresenter implements BookContract.Presenter {
     @Override
     public void loadSubBook() {
         view.showloading();
-        compositeSubscription.add(bookModel.getSubBook().subscribe(new Action1<BookEntity>() {
+        compositeSubscription.add(bookModel.getSubBook().subscribe(new Action1<Result<Book>>() {
             @Override
-            public void call(BookEntity bookEntity) {
-                if (bookEntity != null && bookEntity.getReturn().getList() != null && bookEntity.getReturn().getList().size() > 0) {
-                    view.showBooks(bookEntity.getReturn().getList());
+            public void call(Result<Book> bookEntity) {
+
+                if (bookEntity != null && bookEntity.getReturn().getT().size() > 0) {
+                    view.showBooks(bookEntity.getReturn().getT());
                 } else {
                     view.showNoBooks();
                 }
@@ -56,12 +56,12 @@ public class BookPresenter implements BookContract.Presenter {
     @Override
     public void loadWeekBook(int PageIndex) {
         view.showloading();
-        bookModel.getWeekBook("\"7\"", "\"0\"", PageIndex).subscribe(new Action1<BookEntity>() {
+        bookModel.getWeekBook("\"7\"", "\"0\"", PageIndex).subscribe(new Action1<Result<Book>>() {
             @Override
-            public void call(BookEntity bookEntity) {
-                if (bookEntity != null && bookEntity.getReturn().getList() != null && bookEntity.getReturn().getList().size() > 0) {
+            public void call(Result<Book> bookEntity) {
+                if (bookEntity != null &&  bookEntity.getReturn().getT().size() > 0) {
                     if (view.isActive()) {
-                        view.showBooks(bookEntity.getReturn().getList());
+                        view.showBooks(bookEntity.getReturn().getT());
                     }
                 } else {
                     view.showNoBooks();

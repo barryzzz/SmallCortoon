@@ -3,9 +3,8 @@ package xi.lsl.code.app.main.home;
 import rx.functions.Action0;
 import rx.functions.Action1;
 import rx.subscriptions.CompositeSubscription;
-import xi.lsl.code.app.main.home.SubBookContract;
-import xi.lsl.code.app.main.home.SubBookModel;
-import xi.lsl.code.lib.utils.entity.BookEntity;
+import xi.lsl.code.lib.utils.entity.Book;
+import xi.lsl.code.lib.utils.entity.Result;
 
 /**
  * Description:
@@ -21,6 +20,7 @@ public class SubBookPresenter implements SubBookContract.Presenter {
 
     private CompositeSubscription compositeSubscription;
 
+
     public SubBookPresenter(SubBookModel subBookModel, SubBookContract.View view) {
         this.view = view;
         this.subBookModel = subBookModel;
@@ -28,11 +28,11 @@ public class SubBookPresenter implements SubBookContract.Presenter {
 
     @Override
     public void loadSubBooks() {
-        compositeSubscription.add(subBookModel.getSubBooks().subscribe(new Action1<BookEntity>() {
+        compositeSubscription.add(subBookModel.getSubBooks().subscribe(new Action1<Result<Book>>() {
             @Override
-            public void call(BookEntity bookEntity) {
-                if (bookEntity != null && bookEntity.getReturn().getList() != null && bookEntity.getReturn().getList().size() > 0) {
-                    view.showBooks(bookEntity.getReturn().getList());
+            public void call(Result<Book> books) {
+                if (books != null && books.getReturn().getT().size() > 0) {
+                    view.showBooks(books.getReturn().getT());
                 } else {
                     view.showNoBooks();
                 }

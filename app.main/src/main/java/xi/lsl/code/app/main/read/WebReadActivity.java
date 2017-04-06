@@ -30,6 +30,8 @@ import xi.lsl.code.app.main.R;
 import xi.lsl.code.lib.utils.base.BaseActivity;
 import xi.lsl.code.lib.utils.base.widget.ReadWebView;
 import xi.lsl.code.lib.utils.entity.BmobReponse;
+import xi.lsl.code.lib.utils.entity.Chapter;
+import xi.lsl.code.lib.utils.entity.Result;
 import xi.lsl.code.lib.utils.net.CommonApis;
 import xi.lsl.code.lib.utils.net.Constants;
 import xi.lsl.code.lib.utils.utils.ScreenUtil;
@@ -49,9 +51,10 @@ public class WebReadActivity extends BaseActivity {
     LinearLayout mBottomLinearLayout;
 
     private String url;
-    private String bookId;
-    private String title;
-
+    private String CHAPTER_ID; //章节id
+    private String CHAPTER_TITLE;
+    private String BOOK_ID;//书本id
+    private String BOOK_NAME; //书本名称
     private CompositeSubscription mSubscription;
     private ReadModel mReadModel;
 
@@ -63,14 +66,16 @@ public class WebReadActivity extends BaseActivity {
         setContentView(R.layout.activity_web_book_read);
         ButterKnife.inject(this);
 
-        bookId = getIntent().getStringExtra(Constants.WEB_CHAPTER_ID);
-        title = getIntent().getStringExtra(Constants.WEB_TITLE);
-        url = CommonApis.URL_IMG_CHAPTER + bookId;
+        CHAPTER_ID = getIntent().getStringExtra(Constants.WEB_CHAPTER_ID);
+        CHAPTER_TITLE = getIntent().getStringExtra(Constants.WEB_CHAPTER_TITLE);
+        BOOK_ID = getIntent().getStringExtra(Constants.WEB_BOOK_ID);
+        BOOK_NAME = getIntent().getStringExtra(Constants.WEB_BOOK_NAME);
+        url = CommonApis.URL_IMG_CHAPTER + CHAPTER_ID;
 
         mSubscription = new CompositeSubscription();
         mReadModel = new ReadModel();
-        if (bookId != null && !"".equals(bookId))
-            saveBook(bookId, title);
+        if (CHAPTER_ID != null && !"".equals(CHAPTER_ID))
+            saveBook(BOOK_ID, CHAPTER_ID, BOOK_NAME, CHAPTER_TITLE);
 
         iniWebView();
         iniPopuWindow();
@@ -78,10 +83,34 @@ public class WebReadActivity extends BaseActivity {
 
     }
 
+    /**
+     * 读取章节数据
+     */
+    private void loadChapter() {
+        if (BOOK_ID != null) {
+            mSubscription.add(mReadModel.queryChapterLists(BOOK_ID, "20").subscribe(new Action1<Result<Chapter>>() {
+                @Override
+                public void call(Result<Chapter> bookList) {
 
-    private void saveBook(String bookId, String name) {
-        if (bookId != null && name != null) {
-            mSubscription.add(mReadModel.insertBook(bookId, name).subscribe(new Action1<BmobReponse>() {
+                }
+            }, new Action1<Throwable>() {
+                @Override
+                public void call(Throwable throwable) {
+
+                }
+            }, new Action0() {
+                @Override
+                public void call() {
+
+                }
+            }));
+        }
+    }
+
+
+    private void saveBook(String bookId, String ChapterId, String BookName, String ChapterName) {
+        if (ChapterId != null && BookName != null) {
+            mSubscription.add(mReadModel.insertBook(bookId, ChapterId, BookName, ChapterName).subscribe(new Action1<BmobReponse>() {
                 @Override
                 public void call(BmobReponse bmobReponse) {
                     Log.e("info--》", "code" + bmobReponse.code);
@@ -152,7 +181,7 @@ public class WebReadActivity extends BaseActivity {
         switch (v.getId()) {
             case R.id.read_bottom_comment:
 //                gotoActivity(BookCommentActivity.class, false);
-                if (Small.openUri("com?bookid=" + bookId, mContext)) {
+                if (Small.openUri("com?bookid=" + CHAPTER_ID, mContext)) {
 
                 } else {
                     toast("进行下载操作!");
@@ -251,14 +280,14 @@ public class WebReadActivity extends BaseActivity {
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
         outState.putString(URL, url);
-        outState.putString(TITLE, title);
+        outState.putString(TITLE, CHAPTER_TITLE);
     }
 
     @Override
     protected void onRestoreInstanceState(Bundle savedInstanceState) {
         super.onRestoreInstanceState(savedInstanceState);
         url = savedInstanceState.getString(URL);
-        title = savedInstanceState.getString(TITLE);
+        CHAPTER_TITLE = savedInstanceState.getString(TITLE);
     }
 
     @Override

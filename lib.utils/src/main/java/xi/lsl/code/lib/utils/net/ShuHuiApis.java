@@ -9,10 +9,11 @@ import retrofit2.http.POST;
 import retrofit2.http.Query;
 import retrofit2.http.QueryMap;
 import rx.Observable;
-import xi.lsl.code.lib.utils.entity.BookEntity;
-import xi.lsl.code.lib.utils.entity.BookList;
+import xi.lsl.code.lib.utils.entity.Book;
+import xi.lsl.code.lib.utils.entity.Chapter;
 import xi.lsl.code.lib.utils.entity.LoginMsg;
 import xi.lsl.code.lib.utils.entity.RegMsg;
+import xi.lsl.code.lib.utils.entity.Result;
 import xi.lsl.code.lib.utils.entity.SubEntity;
 
 /**
@@ -47,16 +48,28 @@ public interface ShuHuiApis {
 
 
     @GET("ComicBooks/GetAllBook")
-    Observable<BookEntity> getBooks(@QueryMap Map<String, String> map);  //获取本周更新/订阅/最新推荐/搜索/获取分类记录
+    Observable<Result<Book>> getBooks(@QueryMap Map<String, String> map);  //获取本周更新/订阅/最新推荐/搜索/获取分类记录
 
     @GET("Subscribe")
     Observable<SubEntity> subBook(@QueryMap Map<String, String> map);
 
+    /**
+     * 获取订阅的书本
+     *
+     * @return
+     */
     @GET("ComicBooks/GetSubscribe")
-    Observable<BookEntity> getSubBooks();
+    Observable<Result<Book>> getSubBooks();
 
+    /**
+     * 获取漫画章节数
+     *
+     * @param bookid
+     * @param pageindex
+     * @return
+     */
     @GET("ComicBooks/GetChapterList")
-    Observable<BookList> getBookLists(@Query("id") String bookid, @Query("PageIndex") String pageindex);
+    Observable<Result<Chapter>> getBookLists(@Query("id") String bookid, @Query("PageIndex") String pageindex);
 
 
 }

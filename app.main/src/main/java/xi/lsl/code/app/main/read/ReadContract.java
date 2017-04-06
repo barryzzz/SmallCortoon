@@ -4,7 +4,7 @@ import java.util.List;
 
 import xi.lsl.code.lib.utils.base.BasePresenter;
 import xi.lsl.code.lib.utils.base.BaseView;
-import xi.lsl.code.lib.utils.entity.BookList;
+import xi.lsl.code.lib.utils.entity.Chapter;
 
 /**
  * Description:
@@ -19,7 +19,7 @@ public interface ReadContract {
          *
          * @param data
          */
-        void showBookList(List<BookList.ReturnBean.ListBean> data);
+        void showBookList(List<Chapter> data);
 
         /**
          * 查看内容

@@ -13,7 +13,7 @@ import java.util.Map;
 
 import rx.Observable;
 import xi.lsl.code.lib.utils.entity.Book;
-import xi.lsl.code.lib.utils.entity.BookEntity;
+import xi.lsl.code.lib.utils.entity.Result;
 import xi.lsl.code.lib.utils.net.Nets;
 import xi.lsl.code.lib.utils.net.RxSchedulers;
 
@@ -40,10 +40,10 @@ public class SearchModel {
      * @param title
      * @return
      */
-    public Observable<BookEntity> search(String title) {
+    public Observable<Result<Book>> search(String title) {
         Map<String, String> map = new HashMap<>();
         map.put("Title", title);
-        return Nets.getShuHuiApis().getBooks(map).compose(RxSchedulers.<BookEntity>io_main());
+        return Nets.getShuHuiApis().getBooks(map).compose(RxSchedulers.<Result<Book>>io_main());
     }
 
 

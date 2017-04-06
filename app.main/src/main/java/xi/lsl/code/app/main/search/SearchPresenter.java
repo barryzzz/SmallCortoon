@@ -6,7 +6,7 @@ import rx.functions.Action0;
 import rx.functions.Action1;
 import rx.subscriptions.CompositeSubscription;
 import xi.lsl.code.lib.utils.entity.Book;
-import xi.lsl.code.lib.utils.entity.BookEntity;
+import xi.lsl.code.lib.utils.entity.Result;
 
 /**
  * searchActivity 的presenter
@@ -27,12 +27,12 @@ public class SearchPresenter implements SearchContract.Presenter {
     @Override
     public void search(final String str) {
         mView.showloading();
-        mSubscription.add(mModel.search(str).subscribe(new Action1<BookEntity>() {
+        mSubscription.add(mModel.search(str).subscribe(new Action1<Result<Book>>() {
             @Override
-            public void call(BookEntity bookEntity) {
-                if (bookEntity != null && bookEntity.getReturn().getList() != null && bookEntity.getReturn().getList().size() > 0) {
+            public void call(Result<Book> bookEntity) {
+                if (bookEntity != null && bookEntity.getReturn().getT().size() > 0) {
                     //有搜索记录
-                    mView.showSearchBooks(bookEntity.getReturn().getList());
+                    mView.showSearchBooks(bookEntity.getReturn().getT());
                 }
             }
         }, new Action1<Throwable>() {
