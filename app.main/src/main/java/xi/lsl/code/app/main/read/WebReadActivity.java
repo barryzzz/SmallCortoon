@@ -75,6 +75,7 @@ public class WebReadActivity extends BaseActivity implements ChapterListAdapter.
 
         mPresenter = new ReadPresenter(new ReadModel(), this);
 
+        mPresenter.subscribe();
 
         iniWebView();
         iniPopuWindow();
@@ -98,7 +99,6 @@ public class WebReadActivity extends BaseActivity implements ChapterListAdapter.
         View view = mPopupWindow.getContentView();
 
         RecyclerView popuChapterView = (RecyclerView) view.findViewById(R.id.popu_chapterlist);
-
         popuChapterView.setLayoutManager(new GridLayoutManager(mContext, 4));
         popuChapterView.setItemAnimator(new DefaultItemAnimator());
 
@@ -264,7 +264,6 @@ public class WebReadActivity extends BaseActivity implements ChapterListAdapter.
     @Override
     protected void onResume() {
         super.onResume();
-        mPresenter.subscribe();
         if (mWebView != null)
             mWebView.onResume();
     }

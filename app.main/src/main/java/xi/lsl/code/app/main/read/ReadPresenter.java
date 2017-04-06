@@ -2,6 +2,12 @@ package xi.lsl.code.app.main.read;
 
 import android.util.Log;
 
+import com.google.gson.Gson;
+import com.google.gson.JsonArray;
+import com.google.gson.reflect.TypeToken;
+
+import java.util.List;
+
 import rx.functions.Action0;
 import rx.functions.Action1;
 import rx.subscriptions.CompositeSubscription;
@@ -30,9 +36,15 @@ public class ReadPresenter implements ReadContract.Presenter {
     public void loadChapter(final String bookid, int PageIndex) {
         mView.showloading();
         mReadModel.queryChapterLists(bookid, String.valueOf(PageIndex)).subscribe(new Action1<Result<Chapter>>() {
+
             @Override
             public void call(Result<Chapter> bookList) {
-                mView.showChapterList(bookList.getReturn().getT());
+
+                Gson gson = new Gson();
+                JsonArray jsonArray = gson.toJsonTree(bookList.getReturn().getT()).getAsJsonArray();
+                List<Chapter> chapters = gson.fromJson(jsonArray.toString(), new TypeToken<List<Chapter>>() {
+                }.getType());
+                mView.showChapterList(chapters);
             }
         }, new Action1<Throwable>() {
             @Override
