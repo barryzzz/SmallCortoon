@@ -86,17 +86,13 @@ public class WebReadActivity extends BaseActivity implements ChapterListAdapter.
 
     private void iniPopuWindow() {
 
-        mPopupWindow = new PopupWindow(mContext);
-        mPopupWindow.setWidth(ViewGroup.LayoutParams.MATCH_PARENT);
-        mPopupWindow.setHeight(ScreenUtil.dip2px(200f));
-        mPopupWindow.setContentView(LayoutInflater.from(mContext).inflate(R.layout.popu_layout, null));
+        View view = LayoutInflater.from(mContext).inflate(R.layout.popu_layout, null);
+        mPopupWindow = new PopupWindow(view,
+                ViewGroup.LayoutParams.MATCH_PARENT, ScreenUtil.getScreenHeight() / 2);
         mPopupWindow.setFocusable(true);
         mPopupWindow.setClippingEnabled(true);
 
 //        mPopupWindow.setAnimationStyle(xi.lsl.code.smallcortoon.R.style.popu_anim_style);
-
-
-        View view = mPopupWindow.getContentView();
 
         RecyclerView popuChapterView = (RecyclerView) view.findViewById(R.id.popu_chapterlist);
         popuChapterView.setLayoutManager(new GridLayoutManager(mContext, 4));
@@ -114,6 +110,7 @@ public class WebReadActivity extends BaseActivity implements ChapterListAdapter.
         CHAPTER_ID = String.valueOf(chapter.getId());
         CHAPTER_TITLE = String.valueOf(chapter.getTitle());
         mPresenter.setChapterId(CHAPTER_ID);
+        mPopupWindow.dismiss();
     }
 
     private void iniWebView() {
@@ -168,7 +165,7 @@ public class WebReadActivity extends BaseActivity implements ChapterListAdapter.
                         mPopupWindow.dismiss();
                     } else {
                         mPresenter.loadChapter(BOOK_ID, 0);
-                        PopupWindowCompat.showAsDropDown(mPopupWindow, mBottomLinearLayout, Gravity.TOP, 0, 0);
+                        PopupWindowCompat.showAsDropDown(mPopupWindow, WebReadActivity.this.findViewById(R.id.activity_web_read), Gravity.BOTTOM, 0, 0);
                     }
                 }
                 break;
@@ -189,8 +186,9 @@ public class WebReadActivity extends BaseActivity implements ChapterListAdapter.
     @Override
     public void showChapterList(List<Chapter> data) {
         if (data != null && data.size() > 0) {
+            mChapters.clear();
             mChapters.addAll(data);
-            mChapterListAdapter.notifyItemRangeInserted(0, mChapters.size());
+            mChapterListAdapter.notifyDataSetChanged();
         }
     }
 

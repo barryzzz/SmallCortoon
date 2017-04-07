@@ -69,7 +69,7 @@ public class ChapterListAdapter extends RecyclerView.Adapter<ChapterListAdapter.
     /**
      * 抛出点击事件
      */
-    private onChapterClickListener mOnChapterClickListener;
+    private onChapterClickListener mOnChapterClickListener = null;
 
     public void setOnChapterClickListener(onChapterClickListener mOnChapterClickListener) {
         this.mOnChapterClickListener = mOnChapterClickListener;
