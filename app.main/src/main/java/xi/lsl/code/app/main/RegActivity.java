@@ -17,12 +17,10 @@ import rx.functions.Action1;
 import rx.schedulers.Schedulers;
 import xi.lsl.code.lib.utils.base.BaseActivity;
 import xi.lsl.code.lib.utils.entity.RegMsg;
-import xi.lsl.code.lib.utils.entity.User;
 import xi.lsl.code.lib.utils.net.Constants;
 import xi.lsl.code.lib.utils.net.Nets;
 import xi.lsl.code.lib.utils.utils.EncryptionUtils;
 import xi.lsl.code.lib.utils.utils.InputTextUtil;
-import xi.lsl.code.lib.utils.utils.SPUtil;
 
 /**
  * 注册

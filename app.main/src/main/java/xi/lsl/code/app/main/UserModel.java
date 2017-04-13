@@ -2,17 +2,14 @@ package xi.lsl.code.app.main;
 
 import com.google.gson.Gson;
 
-import org.json.JSONObject;
-
 import java.util.HashMap;
 import java.util.Map;
 
 import okhttp3.MediaType;
 import okhttp3.RequestBody;
-import okhttp3.ResponseBody;
 import rx.Observable;
 import xi.lsl.code.lib.utils.entity.BmobReponse;
-import xi.lsl.code.lib.utils.entity.User;
+import xi.lsl.code.lib.utils.entity.BmobUser;
 import xi.lsl.code.lib.utils.net.Nets;
 import xi.lsl.code.lib.utils.net.RxSchedulers;
 
@@ -30,19 +27,19 @@ public class UserModel {
         mGson = new Gson();
     }
 
-    Observable<BmobReponse> insertUser(User user) {
+    Observable<BmobReponse> insertUser(BmobUser user) {
         return Nets.getBmobApis().InsertUser(createBody(user)).compose(RxSchedulers.<BmobReponse>io_main());
     }
 
-    Observable<User> QueryUser(String email){
+    Observable<BmobUser> QueryUser(String email){
         Map<String,String> map=new HashMap<>();
         map.put("user_email",email);
         String json=mGson.toJson(map);
-        return Nets.getBmobApis().QueryUser(json).compose(RxSchedulers.<User>io_main());
+        return Nets.getBmobApis().QueryUser(json).compose(RxSchedulers.<BmobUser>io_main());
     }
 
 
-    private RequestBody createBody(User user){
+    private RequestBody createBody(BmobUser user){
         if(mGson==null){
             throw  new RuntimeException("gson is null");
         }

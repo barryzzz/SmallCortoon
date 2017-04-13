@@ -5,7 +5,7 @@ import android.content.Context;
 
 import com.orhanobut.logger.Logger;
 
-import xi.lsl.code.lib.utils.entity.User;
+import xi.lsl.code.lib.utils.entity.BmobUser;
 
 
 /**
@@ -17,7 +17,7 @@ import xi.lsl.code.lib.utils.entity.User;
 public class App extends Application {
 
     private static Context mContext;
-    public static User userInfo;
+    public static BmobUser userInfo;
     private final String TAG = "xi.lsl.info--->";
 
     @Override

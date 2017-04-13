@@ -3,7 +3,7 @@ package xi.lsl.code.app.main;
 import android.app.Application;
 import android.content.Context;
 
-import xi.lsl.code.lib.utils.entity.User;
+import xi.lsl.code.lib.utils.entity.BmobUser;
 
 
 /**
@@ -15,7 +15,7 @@ import xi.lsl.code.lib.utils.entity.User;
 public class App extends Application {
 
     private static Context mContext;
-    public static User userInfo;
+    public static BmobUser userInfo;
 
     @Override
     public void onCreate() {

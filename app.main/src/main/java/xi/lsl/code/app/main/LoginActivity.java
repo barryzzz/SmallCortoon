@@ -17,7 +17,7 @@ import xi.lsl.code.app.main.main.MainActivity;
 import xi.lsl.code.lib.utils.base.BaseActivity;
 import xi.lsl.code.lib.utils.entity.BmobReponse;
 import xi.lsl.code.lib.utils.entity.LoginMsg;
-import xi.lsl.code.lib.utils.entity.User;
+import xi.lsl.code.lib.utils.entity.BmobUser;
 import xi.lsl.code.lib.utils.net.Constants;
 import xi.lsl.code.lib.utils.net.Nets;
 import xi.lsl.code.lib.utils.net.RxSchedulers;
@@ -76,7 +76,7 @@ public class LoginActivity extends BaseActivity {
                     @Override
                     public Observable<BmobReponse> call(LoginMsg loginMsg) {
                         LoginMsg.ReturnBean bean = loginMsg.getReturn();
-                        User user = new User(bean.getId() + "", s1, s2, bean.getAvatar());
+                        BmobUser user = new BmobUser(bean.getId() + "", s1, s2, bean.getAvatar());
                         SPUtil.saveObject(Constants.KEY_LOGIN, user);
                         SPUtil.saveSetting(Setting.IS_LOGIN, Setting.CODE_1);
                         App.userInfo = user;
