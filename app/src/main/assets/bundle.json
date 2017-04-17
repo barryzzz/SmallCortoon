@@ -12,7 +12,7 @@
       "uri": "com",
       "pkg": "xi.lsl.code.app.com",
       "rules": {
-        "circle": "CircleActivity"
+        "circle": "ComActivity"
       }
     },
     {
