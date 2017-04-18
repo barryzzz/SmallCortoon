@@ -145,7 +145,7 @@ public class WebReadActivity extends BaseActivity implements ChapterListAdapter.
         switch (v.getId()) {
             case R.id.read_bottom_comment:
 //                gotoActivity(BookCommentActivity.class, false);
-                if (Small.openUri("com/circle?bookid=" + BOOK_ID, mContext)) {
+                if (Small.openUri("com/circle?bookid=" + BOOK_ID+"&bookname="+BOOK_NAME, mContext)) {
 
                 } else {
                     //TODO 进行下载操作

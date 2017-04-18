@@ -1,7 +1,5 @@
 package xi.lsl.code.lib.utils.net;
 
-import java.util.Map;
-
 import okhttp3.RequestBody;
 import okhttp3.ResponseBody;
 import retrofit2.http.Body;
@@ -9,7 +7,6 @@ import retrofit2.http.GET;
 import retrofit2.http.POST;
 import retrofit2.http.Path;
 import retrofit2.http.Query;
-import retrofit2.http.QueryMap;
 import rx.Observable;
 import xi.lsl.code.lib.utils.entity.BmobBook;
 import xi.lsl.code.lib.utils.entity.BmobComment;
@@ -22,8 +19,12 @@ import xi.lsl.code.lib.utils.entity.BmobUser;
  */
 
 public interface BmobApis {
-    @GET("classes/book_user?where=")
-    Observable<BmobUser> QueryUser(@Query("user_email") String email);
+    /**
+     * @param user 参数以键值对形式，例如{"user_email":"408930131@qq.com"}
+     * @return
+     */
+    @GET("classes/book_user")
+    Observable<BmobUser> QueryUser(@Query("where") String user);
 
     @POST("classes/book_user")
     Observable<BmobReponse> InsertUser(@Body RequestBody body);
@@ -48,15 +49,26 @@ public interface BmobApis {
     /**
      * 获取指定书本的评论
      *
-     * @param bookid
+     * @param bookid 参数是键值形式 ,例如{'book_id':'1000'}  || ?include=user,book&where={bookid}
      * @return
      */
-    @GET("classes/commet?where={'book_id':'{bookid}'}")
-    Observable<BmobComment> QueryBookComment(@Path("bookid") String bookid);
+    @GET("classes/commet?include=user,book")
+    Observable<BmobComment> QueryBookComment(@Query("where") String bookid);
 
-    @GET("classes/book_book?where={'book_id':'{bookid}'}")
-    Observable<BmobBook> QueryBooks(@Path("bookid") String bookid);
+    /**
+     * 获取某本书的信息
+     * @param bookid 参数是键值形式 ,例如{'book_id':'1000'}
+     * @return
+     */
+    @GET("classes/book_book")
+    Observable<BmobBook> QueryBooks(@Query("where") String bookid);
 
+    /**
+     * 插入书本的信息
+     *
+     * @param body
+     * @return
+     */
     @POST("classes/book_book")
     Observable<BmobReponse> InsertBooks(@Body RequestBody body);
 

@@ -2,6 +2,9 @@ package xi.lsl.code.app.com;
 
 import org.junit.Test;
 
+import xi.lsl.code.app.com.comment.CommentModel;
+import xi.lsl.code.lib.utils.net.Nets;
+
 import static org.junit.Assert.*;
 
 /**
@@ -12,6 +15,6 @@ import static org.junit.Assert.*;
 public class ExampleUnitTest {
     @Test
     public void addition_isCorrect() throws Exception {
-        assertEquals(4, 2 + 2);
+        Nets.getBmobApis().QueryComment();
     }
 }

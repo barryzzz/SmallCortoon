@@ -1,6 +1,7 @@
 package xi.lsl.code.app.com.comment;
 
 import com.google.gson.Gson;
+import com.google.gson.JsonObject;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -32,9 +33,14 @@ public class CommentModel {
      *
      * @return
      */
-    Observable<BmobComment> getComment(String bookId) {
+    public Observable<BmobComment> getComment(String bookId) {
+        JsonObject jsonObject = new JsonObject(); //组装成为键值
+        jsonObject.addProperty("book_id", bookId);
+        return Nets.getBmobApis().QueryBookComment(jsonObject.toString()).compose(RxSchedulers.<BmobComment>io_main());
+    }
 
-        return Nets.getBmobApis().QueryBookComment(bookId).compose(RxSchedulers.<BmobComment>io_main());
+    public Observable<BmobComment> getALLComment() {
+        return Nets.getBmobApis().QueryComment().compose(RxSchedulers.<BmobComment>io_main());
     }
 
     /**
@@ -42,7 +48,7 @@ public class CommentModel {
      *
      * @return
      */
-    Observable<ResponseBody> sendComment(String userObjid, String bookObjid, String bookId, String msg) {
+    public Observable<ResponseBody> sendComment(String userObjid, String bookObjid, String bookId, String msg) {
 
         SendCm sendCm = createSendMsg(userObjid, bookObjid, bookId, msg);
 
@@ -55,7 +61,7 @@ public class CommentModel {
      * @param userid
      * @return
      */
-    Observable<ResponseBody> setUpThumbs(int userid) {
+    public Observable<ResponseBody> setUpThumbs(int userid) {
         return null;
     }
 
@@ -65,7 +71,7 @@ public class CommentModel {
      * @param userid
      * @return
      */
-    Observable<ResponseBody> setDownThumbs(int userid) {
+    public Observable<ResponseBody> setDownThumbs(int userid) {
         return null;
     }
 

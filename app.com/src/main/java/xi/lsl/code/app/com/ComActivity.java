@@ -5,6 +5,9 @@ import android.os.Bundle;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.View;
+import android.widget.Button;
+import android.widget.TextView;
 
 import net.wequick.small.Small;
 
@@ -25,6 +28,10 @@ public class ComActivity extends BaseActivity implements CommentContract.View {
 
     @InjectView(R.id.com_rv)
     RecyclerView mRecyclerView;
+    @InjectView(R.id.title_back)
+    Button mBack;
+    @InjectView(R.id.title_tv)
+    TextView mTitle;
 
 
     private ComAdapter mAdapter;
@@ -43,15 +50,28 @@ public class ComActivity extends BaseActivity implements CommentContract.View {
         setContentView(R.layout.activity_com);
         ButterKnife.inject(this);
 
-        Uri uri = Small.getUri(this);
-        if (uri != null)
-            bookId = uri.getQueryParameter("bookid");
-        else
-            toast("bookId读取异常!");
+        init();
 
         iniRecycleView();
 
 
+    }
+
+    private void init() {
+        Uri uri = Small.getUri(this);
+        if (uri != null) {
+            bookId = uri.getQueryParameter("bookid");
+            mTitle.setText(uri.getQueryParameter("bookname"));
+        } else {
+            toast("bookId读取异常!");
+            mTitle.setText("读取书本信息失败");
+        }
+        mBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
     }
 
     public void iniRecycleView() {
