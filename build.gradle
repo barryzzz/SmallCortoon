@@ -6,8 +6,8 @@ buildscript {
         jcenter()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:2.3.0'
-        classpath 'net.wequick.tools.build:gradle-small:1.2.0-beta3'
+        classpath 'com.android.tools.build:gradle:2.3.1'
+        classpath 'net.wequick.tools.build:gradle-small:1.2.0-beta4'
         // NOTE: Do not place your application dependencies here; they belong
         // in the individual module build.gradle files
     }
@@ -42,7 +42,7 @@ small {
 
     // The compiling `net.wequick.small:small` aar version.
 
-    aarVersion = "1.2.0-beta3"
+    aarVersion = "1.2.0-beta4"
 
     // The project-wide Android version configurations
 
@@ -52,7 +52,7 @@ small {
 
         buildToolsVersion = "25.0.2"
 
-        supportVersion = "25.3.1" // replace this with an explicit value
+        supportVersion = "25.3.0" // replace this with an explicit value
 
     }
 
